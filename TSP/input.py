@@ -1,7 +1,7 @@
 
 class Input(object):
     def __init__(self):
-        pass
+        self.size = -1
 
     def getInput(self):
         self.input = [(0, 1, 3), (0, 2, 12), (0, 3, 6), (1, 2, 5), (1, 3, -4), (2, 3, -4)]
@@ -17,12 +17,12 @@ class Input(object):
             else:
                 matrix[start] = {end : weight}
 
-        size = len(matrix) + 1
+        self.size = len(matrix) + 1
 
-        for row in range(size):
+        for row in range(self.size):
             if row in matrix:
                 row_value = matrix[row]
-                for column in range(size):
+                for column in range(self.size):
                     if row == column:
                         row_value[column] = 0
                     if column not in row_value:
@@ -30,7 +30,7 @@ class Input(object):
                         # matrix[column][row] = matrix[row][column]
             else:
                 row_value = {}
-                for column in range(size):
+                for column in range(self.size):
                     if row == column:
                         row_value[column] = 0
                     if column not in row_value:
@@ -41,6 +41,9 @@ class Input(object):
 
     def Distance(self, from_node, to_node):
         return self.matrix[from_node][to_node]
+
+    def getSize(self):
+        return self.size
 
 if __name__ == '__main__':
     Input().transform()
