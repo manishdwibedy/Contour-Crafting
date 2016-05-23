@@ -11,5 +11,16 @@ class Input(object):
     def getInput(self):
         self.input = [(0, 1, 3), (0, 2, 12), (0, 3, 6), (1, 2, 5), (1, 3, -4), (2, 3, -4)]
 
+    def transform(self):
+        self.getInput()
+        # {start : [{end, weight},{end, weight},....],... }
+        matrix = {}
+        for input in self.input:
+            (start, end, weight) = input
+            pass
+        pass
     def Distance(self, from_node, to_node):
         return self.matrix[from_node][to_node]
+
+if __name__ == '__main__':
+    Input().transform()
