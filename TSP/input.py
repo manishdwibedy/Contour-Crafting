@@ -4,11 +4,14 @@ class Input(object):
     def __init__(self):
         self.size = -1
 
-    def getInput(self, filename):
+    def getInput(self, filename, headerRow = False):
 
         with open(filename + '.csv', 'rb') as f:
             reader = csv.reader(f)
-            self.input = list(reader)
+            if headerRow:
+                self.input = list(reader)[1:]
+            else:
+                self.input = list(reader)
             self.cleanInput()
 
     def cleanInput(self):
