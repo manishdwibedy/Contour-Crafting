@@ -1,11 +1,29 @@
+import csv
 
 class Input(object):
     def __init__(self):
         self.size = -1
 
-    def getInput(self, input):
-        self.input = input
+    def getInput(self, filename):
 
+        with open(filename + '.csv', 'rb') as f:
+            reader = csv.reader(f)
+            self.input = list(reader)
+            self.cleanInput()
+
+    def cleanInput(self):
+        list = []
+        try:
+            for line in self.input:
+                (start, end, weight) = line
+                i_start = int(start)
+                i_end = int(end)
+                f_weight = float(weight)
+                list.append((i_start, i_end, f_weight))
+
+            self.input = list
+        except:
+            print 'Error in the data'
     def transform(self,):
         # {start : [{end, weight},{end, weight},....],... }
         matrix = {}
