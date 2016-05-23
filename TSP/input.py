@@ -6,7 +6,7 @@ class Input(object):
 
     def getInput(self, filename, headerRow = False):
 
-        with open(filename + '.csv', 'rb') as f:
+        with open('data/'+filename + '.csv', 'rb') as f:
             reader = csv.reader(f)
             if headerRow:
                 self.input = list(reader)[1:]
