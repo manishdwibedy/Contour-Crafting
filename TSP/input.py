@@ -3,11 +3,10 @@ class Input(object):
     def __init__(self):
         self.size = -1
 
-    def getInput(self):
-        self.input = [(0, 1, 3), (0, 2, 12), (0, 3, 6), (1, 2, 5), (1, 3, -4), (2, 3, -4)]
+    def getInput(self, input):
+        self.input = input
 
-    def transform(self):
-        self.getInput()
+    def transform(self,):
         # {start : [{end, weight},{end, weight},....],... }
         matrix = {}
         for input in self.input:
