@@ -32,6 +32,7 @@ class TSP(object):
         # these nodes.
         # input = Input()
         matrix = Input()
+        matrix.transform()
         matrix_callback = matrix.Distance
         if self.tsp_use_random_matrix:
             routing.SetArcCostEvaluatorOfAllVehicles(matrix_callback)
