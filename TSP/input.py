@@ -18,15 +18,13 @@ class Input(object):
         for input in self.input:
             (start, end, weight) = input
             if start in matrix:
-                matrix[start].append({
-                    'end': end,
-                    'weight': weight
-                })
+                matrix[start][end] = weight
             else:
-                matrix[start] = [{
-                    'end': end,
-                    'weight': weight
-                }]
+                matrix[start] = {end : weight}
+
+        self.matrix = {}
+
+        size = len(matrix)
 
     def Distance(self, from_node, to_node):
         return self.matrix[from_node][to_node]
