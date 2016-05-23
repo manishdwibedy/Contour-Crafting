@@ -1,8 +1,7 @@
-from google.apputils import app
 from ortools.constraint_solver import pywrapcp
 from input import Input
 
-class TCP(object):
+class TSP(object):
     def __init__(self):
         self.tsp_size = 4
         self.tsp_use_random_matrix = True
@@ -68,4 +67,4 @@ class TCP(object):
 
 
 if __name__ == '__main__':
-    TCP().run()
+    TSP().run()
