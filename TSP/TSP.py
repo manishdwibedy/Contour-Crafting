@@ -7,8 +7,7 @@ class TSP(object):
         self.tsp_use_random_matrix = True
         self.use_light_propagation = False
 
-
-    def run(self):
+    def setup(self):
         param = pywrapcp.RoutingParameters()
         param.use_light_propagation = self.use_light_propagation
         pywrapcp.RoutingModel.SetGlobalParameters(param)
@@ -17,14 +16,18 @@ class TSP(object):
         # Second argument = 1 to build a single tour (it's a TSP).
         # Nodes are indexed from 0 to FLAGS_tsp_size - 1, by default the start of
         # the route is node 0.
-        routing = pywrapcp.RoutingModel(self.tsp_size, 1)
+        self.routing = pywrapcp.RoutingModel(self.tsp_size, 1)
 
-        parameters = pywrapcp.RoutingSearchParameters()
+        self.parameters = pywrapcp.RoutingSearchParameters()
         # Setting first solution heuristic (cheapest addition).
-        parameters.first_solution = 'PathCheapestArc'
+        self.parameters.first_solution = 'PathCheapestArc'
         # Disabling Large Neighborhood Search, comment out to activate it.
-        parameters.no_lns = True
-        parameters.no_tsp = False
+        self.parameters.no_lns = True
+        self.parameters.no_tsp = False
+
+    def run(self):
+
+        self.setup()
 
         # Setting the cost function.
         # Put a callback to the distance accessor here. The callback takes two
@@ -35,25 +38,25 @@ class TSP(object):
         matrix.transform()
         matrix_callback = matrix.Distance
         if self.tsp_use_random_matrix:
-            routing.SetArcCostEvaluatorOfAllVehicles(matrix_callback)
+            self.routing.SetArcCostEvaluatorOfAllVehicles(matrix_callback)
         else:
-            routing.SetArcCostEvaluatorOfAllVehicles(self.Distance)
+            self.routing.SetArcCostEvaluatorOfAllVehicles(self.Distance)
 
         # Solve, returns a solution if any.
-        assignment = routing.SolveWithParameters(parameters, None)
+        assignment = self.routing.SolveWithParameters(self.parameters, None)
         if assignment:
             # Solution cost.
             print 'Final Cost is ', assignment.ObjectiveValue()
             # Inspect solution.
             # Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             route_number = 0
-            node = routing.Start(route_number)
+            node = self.routing.Start(route_number)
             route = ''
 
             print '\n\nThe solution is the following: '
-            while not routing.IsEnd(node):
+            while not self.routing.IsEnd(node):
                 route += str(node) + ' -> '
-                node = assignment.Value(routing.NextVar(node))
+                node = assignment.Value(self.routing.NextVar(node))
                 print 'Route : ', route
             else:
                 route += '0'
