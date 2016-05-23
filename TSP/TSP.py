@@ -3,7 +3,6 @@ from input import Input
 
 class TSP(object):
     def __init__(self):
-        # self.tsp_size = 4
         self.tsp_use_random_matrix = True
         self.use_light_propagation = False
 
@@ -19,8 +18,10 @@ class TSP(object):
         self.routing = pywrapcp.RoutingModel(size, 1)
 
         self.parameters = pywrapcp.RoutingSearchParameters()
+
         # Setting first solution heuristic (cheapest addition).
         self.parameters.first_solution = 'PathCheapestArc'
+
         # Disabling Large Neighborhood Search, comment out to activate it.
         self.parameters.no_lns = True
         self.parameters.no_tsp = False
