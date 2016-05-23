@@ -28,7 +28,7 @@ class TSP(object):
 
     def run(self):
         matrix = Input()
-        matrix.getInput('input')
+        matrix.getInput('input', headerRow=True)
         matrix.transform()
 
         self.setup(matrix.getSize())
