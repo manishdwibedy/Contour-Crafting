@@ -68,11 +68,6 @@ class TSP(object):
         else:
             print 'Specify an instance greater than 0.'
 
-    def Distance(i, j):
-      """Sample function."""
-      # Put your distance code here.
-      return i + j
-
 
 if __name__ == '__main__':
     TSP().run()
