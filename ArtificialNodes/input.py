@@ -1,3 +1,4 @@
+import networkx as nx
 
 class Input(object):
     def __init__(self):
@@ -22,3 +23,12 @@ class Input(object):
             'y': 2
         })
         self.input = input
+
+    def createGraph(self):
+        G=nx.Graph()
+
+        for node in self.input:
+            G.add_node(node)
+
+        print G.number_of_edges()
+        print G.number_of_nodes()

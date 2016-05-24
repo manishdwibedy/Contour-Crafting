@@ -1,3 +1,4 @@
+networkx
 ez-setup==0.9
 google-apputils==0.4.2
 ortools==1.3853
