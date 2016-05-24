@@ -47,7 +47,11 @@ class Input(object):
         for node in self.nodes:
             G.add_node(node['id'])
 
+        for edge in self.edges:
+            G.add_edge(edge['start'], edge['end'])
+
         print G.number_of_nodes()
+        print G.number_of_edges()
 
 if __name__ == '__main__':
     Nodesinput = Input()
