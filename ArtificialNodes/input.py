@@ -48,7 +48,7 @@ class Input(object):
             G.add_node(node['id'])
 
         for edge in self.edges:
-            G.add_edge(edge['start'], edge['end'])
+            G.add_edge(edge['start'], edge['end'], weight = -100)
 
         print G.number_of_nodes()
         print G.number_of_edges()
