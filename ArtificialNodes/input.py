@@ -9,4 +9,16 @@ class Input(object):
         The input would be in the form of (x,y) for every node
         '''
         input = []
+        input.append({
+            'x': 0,
+            'y': 0
+        })
+        input.append({
+            'x': 0,
+            'y': 2
+        })
+        input.append({
+            'x': 2,
+            'y': 2
+        })
         self.input = input
