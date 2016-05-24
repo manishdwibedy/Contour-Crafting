@@ -44,14 +44,16 @@ class TSP(object):
         else:
             self.routing.SetArcCostEvaluatorOfAllVehicles(self.Distance)
 
-        self.solve()
+        return self.solve()
 
     def solve(self):
+        solution = {}
         # Solve, returns a solution if any.
         assignment = self.routing.SolveWithParameters(self.parameters, None)
         if assignment:
             # Solution cost.
             print 'Final Cost is ', assignment.ObjectiveValue()
+            solution['cost'] = assignment.ObjectiveValue()
             # Inspect solution.
             # Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             route_number = 0
@@ -66,9 +68,16 @@ class TSP(object):
             else:
                 route += '0'
                 print '\n\nFinal Route is ', route
+
+                routeNodes = route.split(' -> ')
+                nodes = []
+                for node in routeNodes:
+                    nodes.append(int(node))
+                solution['nodes'] = nodes
         else:
             print 'Specify an instance greater than 0.'
-
+        return solution
 
 if __name__ == '__main__':
-    TSP().run()
+    solution = TSP().run()
+    print solution
