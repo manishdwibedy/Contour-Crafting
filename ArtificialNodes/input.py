@@ -48,6 +48,19 @@ class Input(object):
 
                 self.data = data
 
+    def createBasicGraph(self):
+        self.graph = None
+        # If graph data exists
+        if self.data:
+            self.graph = nx.Graph()
+
+            nodes = self.data['nodes']
+            edges = self.data['edges']
+
+            for node in nodes:
+                self.graph.add_node(node['id'], X = node['X'], Y = node['Y'])
+            pass
+
     def parseGraph(self):
         '''
         This method would read the input from a file.
@@ -139,5 +152,6 @@ class Input(object):
 
 if __name__ == '__main__':
     input = Input()
-    input.readFile('input1.json')
+    input.readFile('input.json')
+    input.createBasicGraph()
     pass
