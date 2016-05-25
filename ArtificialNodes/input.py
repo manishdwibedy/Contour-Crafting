@@ -38,6 +38,13 @@ class Input(object):
                 'start': 'B'+str(index),
                 'end': 'C'+str(index)
             })
+
+        for node in ['A','B','C']:
+            edges.append({
+                'start': node + '0',
+                'end': node + '1'
+            })
+
         self.edges = edges
         self.nodes = nodes
 
