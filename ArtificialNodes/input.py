@@ -1,5 +1,5 @@
 import networkx as nx
-from  constant import DEPOSITION_EDGE
+from  constant import DEPOSITION_EDGE, ROTATION_COST
 from collections import Counter
 from math import pow
 
@@ -56,7 +56,10 @@ class Input(object):
             graph.add_node(label)
 
         for edge in self.edges:
-            graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_EDGE)
+            if edge['start'][:1] != edge['end'][:1]:
+                graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_EDGE)
+            else:
+                graph.add_edge(edge['start'], edge['end'], weight = 0)
 
         self.graph = graph
 
