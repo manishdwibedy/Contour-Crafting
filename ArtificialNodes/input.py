@@ -76,6 +76,8 @@ class Input(object):
 
     def getDistance(self, start_node, end_node):
         if start_node in self.graph.node and end_node in self.graph.node:
+            start_node = self.nodes[start_node]
+            end_node = self.nodes[end_node]
             x_diff = start_node['x'] - end_node['x']
             y_diff = start_node['y'] - end_node['y']
             distance = pow(x_diff ** 2 + y_diff ** 2, 0.5)
