@@ -2,10 +2,17 @@ import networkx as nx
 from  constant import DEPOSITION_EDGE, ROTATION_COST
 from collections import Counter
 from math import pow
+import os
 
 class Input(object):
     def __init__(self, type):
         self.type = type
+        self.directory = os.path.dirname(os.path.abspath(__file__))
+
+    def setFileName(self, filename):
+        data_location = os.path.join(self.directory, 'data')
+        file_location = os.path.join(data_location, filename)
+        self.file_location = file_location
 
     def readFile(self):
         '''
