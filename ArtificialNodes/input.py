@@ -53,7 +53,16 @@ class Input(object):
 
         self.graph = graph
 
+    def getOtherNodes(self, node):
+        node_list = []
+        for node_object in self.graph.node:
+            if node != node_object:
+                node_list.append(node_object)
+
+        return node_list
+
 if __name__ == '__main__':
     Nodesinput = Input()
     Nodesinput.readFile()
     Nodesinput.createGraph()
+    Nodesinput.addNodes()
