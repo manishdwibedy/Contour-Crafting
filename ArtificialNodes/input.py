@@ -16,27 +16,28 @@ class Input(object):
         nodes = {}
         edges = []
 
-        nodes['A'] = {
-            'x': 0,
-            'y': 0
-        }
-        nodes['B'] = {
-            'x': 0,
-            'y': 2
-        }
-        nodes['C'] = {
-            'x': 2,
-            'y': 2
-        }
+        for index in range(2):
+            nodes['A'+str(index)] = {
+                'x': 0,
+                'y': 0
+            }
+            nodes['B'+str(index)] = {
+                'x': 0,
+                'y': 2
+            }
+            nodes['C'+str(index)] = {
+                'x': 2,
+                'y': 2
+            }
 
-        edges.append({
-            'start': 'A',
-            'end': 'B'
-        })
-        edges.append({
-            'start': 'B',
-            'end': 'C'
-        })
+            edges.append({
+                'start': 'A'+str(index),
+                'end': 'B'+str(index)
+            })
+            edges.append({
+                'start': 'B'+str(index),
+                'end': 'C'+str(index)
+            })
         self.edges = edges
         self.nodes = nodes
 
