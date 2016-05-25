@@ -38,10 +38,12 @@ class Input(object):
         '''
         self.setFileName(filename)
 
-        with open(self.file_location) as data_file:
-            data = json.load(data_file)
+        # If the file exists
+        if self.file_location:
+            with open(self.file_location) as data_file:
+                data = json.load(data_file)
 
-            self.data = data
+                self.data = data
 
     def parseGraph(self):
         '''
@@ -134,5 +136,5 @@ class Input(object):
 
 if __name__ == '__main__':
     input = Input()
-    input.readFile('input.json')
+    input.readFile('input1.json')
     pass
