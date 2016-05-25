@@ -3,6 +3,7 @@ from  constant import DEPOSITION_EDGE, ROTATION_COST
 from collections import Counter
 from math import pow
 import os
+import json
 
 class Input(object):
     def __init__(self, type):
@@ -14,6 +15,13 @@ class Input(object):
         file_location = os.path.join(data_location, filename)
         self.file_location = file_location
 
+    def readFile(self, filename):
+        self.setFileName(filename)
+
+        with open(self.file_location) as data_file:
+            data = json.load(data_file)
+
+        print(data)
 
     def parseGraph(self):
         '''
