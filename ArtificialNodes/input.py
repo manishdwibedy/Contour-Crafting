@@ -14,7 +14,8 @@ class Input(object):
         file_location = os.path.join(data_location, filename)
         self.file_location = file_location
 
-    def readFile(self):
+
+    def parseGraph(self):
         '''
         This method would read the input from a file.
         The input would be in the form of (x,y) for every node
@@ -105,7 +106,7 @@ class Input(object):
 
 if __name__ == '__main__':
     Nodesinput = Input()
-    Nodesinput.readFile()
+    Nodesinput.parseGraph()
     Nodesinput.createGraph()
     Nodesinput.addNodes()
     pass
