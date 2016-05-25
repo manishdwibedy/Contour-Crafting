@@ -75,9 +75,16 @@ class Input(object):
             for node in missing_nodes:
                 self.graph.add_edge(start_node, node, weight = 1)
             pass
-        pass
+
+    def getDistance(self, start_node, end_node):
+        if start_node in self.graph.node and end_node in self.graph.node:
+            return 1
+        else:
+            return -1
+
 if __name__ == '__main__':
     Nodesinput = Input()
     Nodesinput.readFile()
     Nodesinput.createGraph()
     Nodesinput.addNodes()
+    pass
