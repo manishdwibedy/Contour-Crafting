@@ -4,8 +4,8 @@ from collections import Counter
 from math import pow
 
 class Input(object):
-    def __init__(self):
-        pass
+    def __init__(self, type):
+        self.type = type
 
     def readFile(self):
         '''
