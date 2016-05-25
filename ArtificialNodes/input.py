@@ -116,10 +116,3 @@ if __name__ == '__main__':
     input = Input()
     input.readFile('input.json')
     pass
-
-
-    # Nodesinput = Input()
-    # Nodesinput.parseGraph()
-    # Nodesinput.createGraph()
-    # Nodesinput.addNodes()
-    # pass
