@@ -33,7 +33,7 @@ class Input(object):
 
     def readFile(self, filename):
         '''
-        Reading from the file
+        Reading from the file, if the file actually exists
         :param filename: the filename for the input
         '''
         self.setFileName(filename)
