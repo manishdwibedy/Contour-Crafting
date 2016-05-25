@@ -6,7 +6,7 @@ import os
 import json
 
 class Input(object):
-    def __init__(self, type):
+    def __init__(self, type = 'json'):
         self.type = type
         self.directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -113,8 +113,13 @@ class Input(object):
             return -1
 
 if __name__ == '__main__':
-    Nodesinput = Input()
-    Nodesinput.parseGraph()
-    Nodesinput.createGraph()
-    Nodesinput.addNodes()
+    input = Input()
+    input.readFile('input.json')
     pass
+
+
+    # Nodesinput = Input()
+    # Nodesinput.parseGraph()
+    # Nodesinput.createGraph()
+    # Nodesinput.addNodes()
+    # pass
