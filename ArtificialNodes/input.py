@@ -59,7 +59,9 @@ class Input(object):
 
             for node in nodes:
                 self.graph.add_node(node['id'], X = node['X'], Y = node['Y'])
-            pass
+
+            for edge in edges:
+                self.graph.add_edge(edge['start'], edge['end'], DEPOSITION_EDGE = True)
 
     def parseGraph(self):
         '''
