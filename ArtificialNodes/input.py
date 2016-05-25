@@ -21,7 +21,7 @@ class Input(object):
         with open(self.file_location) as data_file:
             data = json.load(data_file)
 
-        print(data)
+            self.data = data
 
     def parseGraph(self):
         '''
