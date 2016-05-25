@@ -1,0 +1,3 @@
+
+class BasicGraph(object):
+    pass
