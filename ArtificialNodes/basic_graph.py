@@ -54,3 +54,15 @@ class BasicGraph(object):
                 weight = utility.getDistance(self.graph, start_node, end_node)
                 self.graph.add_edge(start_node, node, weight = weight, IDLE_EDGES = True)
             pass
+
+    def addNodes(self):
+        '''
+        Addition of extra nodes
+        :return:
+        '''
+        # If graph data exists
+        if self.graph:
+            nodes = self.data['nodes']
+
+            for node in nodes:
+                self.graph.add_node(node['id'] + '_1', X = node['X'], Y = node['Y'])
