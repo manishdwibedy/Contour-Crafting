@@ -7,15 +7,27 @@ import json
 
 class Input(object):
     def __init__(self, type = 'json'):
+        '''
+        Creating the input class
+        :param type: the type of input, currently defaults to JSON
+        '''
         self.type = type
         self.directory = os.path.dirname(os.path.abspath(__file__))
 
     def setFileName(self, filename):
+        '''
+        Setting the filename for the input
+        :param filename: the filename of the input file
+        '''
         data_location = os.path.join(self.directory, 'data')
         file_location = os.path.join(data_location, filename)
         self.file_location = file_location
 
     def readFile(self, filename):
+        '''
+        Reading from the file
+        :param filename: the filename for the input
+        '''
         self.setFileName(filename)
 
         with open(self.file_location) as data_file:
