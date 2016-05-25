@@ -49,6 +49,9 @@ class Input(object):
                 self.data = data
 
     def createBasicGraph(self):
+        '''
+        Creating a basic graph, if data about the graph exists.
+        '''
         self.graph = None
         # If graph data exists
         if self.data:
