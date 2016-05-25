@@ -38,6 +38,9 @@ class Input(object):
         '''
         self.setFileName(filename)
 
+        # Initialize data to None
+        self.data = None
+
         # If the file exists
         if self.file_location:
             with open(self.file_location) as data_file:
