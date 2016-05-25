@@ -6,3 +6,5 @@ if __name__ == '__main__':
 
     graph = basic_graph.BasicGraph(input.data)
     graph.createBasicGraph()
+    graph.addIdleEdges()
+    pass
