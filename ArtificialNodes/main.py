@@ -4,4 +4,5 @@ if __name__ == '__main__':
     input = input.Input()
     input.readFile('input.json')
 
-    pass
+    graph = basic_graph.BasicGraph(input.data)
+    graph.createBasicGraph()
