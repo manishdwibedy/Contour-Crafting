@@ -1,5 +1,6 @@
 import networkx as nx
 from  constant import DEPOSITION_EDGE
+from collections import Counter
 
 class Input(object):
     def __init__(self):
@@ -61,6 +62,20 @@ class Input(object):
 
         return node_list
 
+    def addNodes(self):
+        for start_node, edges in self.graph.edge.iteritems():
+            other_nodes = Counter(self.getOtherNodes(start_node))
+            adjacent_nodes = []
+            for end_node, weight in edges.iteritems():
+                adjacent_nodes.append(end_node)
+            adjacent_nodes = Counter(adjacent_nodes)
+
+            missing_nodes = other_nodes - adjacent_nodes
+
+            for node in missing_nodes:
+                self.graph.add_edge(start_node, node, weight = 1)
+            pass
+        pass
 if __name__ == '__main__':
     Nodesinput = Input()
     Nodesinput.readFile()
