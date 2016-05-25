@@ -1,4 +1,5 @@
 import networkx as nx
+from  constant import DEPOSITION_EDGE
 
 class Input(object):
     def __init__(self):
@@ -42,16 +43,15 @@ class Input(object):
 
 
     def createGraph(self):
-        G=nx.Graph()
+        graph = nx.Graph()
 
         for node in self.nodes:
-            G.add_node(node['id'])
+            graph.add_node(node['id'])
 
         for edge in self.edges:
-            G.add_edge(edge['start'], edge['end'], weight = -100)
+            graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_EDGE)
 
-        print G.number_of_nodes()
-        print G.number_of_edges()
+        self.graph = graph
 
 if __name__ == '__main__':
     Nodesinput = Input()
