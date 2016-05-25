@@ -16,12 +16,20 @@ class Input(object):
 
     def setFileName(self, filename):
         '''
-        Setting the filename for the input
+        Setting the filename for the input if the file exists, otherwise setting to None.
         :param filename: the filename of the input file
         '''
         data_location = os.path.join(self.directory, 'data')
-        file_location = os.path.join(data_location, filename)
-        self.file_location = file_location
+
+        # Data location exists
+        if os.path.exists(data_location):
+            file_location = os.path.join(data_location, filename)
+
+            # File location exists
+            if os.path.exists(file_location):
+                self.file_location = file_location
+            else:
+                self.file_location = None
 
     def readFile(self, filename):
         '''
