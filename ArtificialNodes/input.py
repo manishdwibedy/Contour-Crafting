@@ -13,24 +13,21 @@ class Input(object):
         The input would be in the form of (x,y) for every node
         '''
 
-        nodes = []
+        nodes = {}
         edges = []
 
-        nodes.append({
-            'id': 'A',
+        nodes['A'] = {
             'x': 0,
             'y': 0
-        })
-        nodes.append({
-            'id': 'B',
+        }
+        nodes['B'] = {
             'x': 0,
             'y': 2
-        })
-        nodes.append({
-            'id': 'C',
+        }
+        nodes['C'] = {
             'x': 2,
             'y': 2
-        })
+        }
 
         edges.append({
             'start': 'A',
@@ -47,8 +44,8 @@ class Input(object):
     def createGraph(self):
         graph = nx.Graph()
 
-        for node in self.nodes:
-            graph.add_node(node['id'])
+        for label, node in self.nodes.iteritems():
+            graph.add_node(label)
 
         for edge in self.edges:
             graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_EDGE)
