@@ -1,6 +1,7 @@
 import networkx as nx
 from  constant import DEPOSITION_EDGE
 from collections import Counter
+from math import pow
 
 class Input(object):
     def __init__(self):
@@ -73,12 +74,15 @@ class Input(object):
             missing_nodes = other_nodes - adjacent_nodes
 
             for node in missing_nodes:
-                self.graph.add_edge(start_node, node, weight = 1)
+                self.graph.add_edge(start_node, node, weight = self.getDistance(start_node, end_node))
             pass
 
     def getDistance(self, start_node, end_node):
         if start_node in self.graph.node and end_node in self.graph.node:
-            return 1
+            x_diff = start_node['x'] - end_node['x']
+            y_diff = start_node['y'] - end_node['y']
+            distance = pow(x_diff ** 2 + y_diff ** 2, 0.5)
+            return distance
         else:
             return -1
 
