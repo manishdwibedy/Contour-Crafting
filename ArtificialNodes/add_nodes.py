@@ -12,16 +12,15 @@ class AddingNodes(object):
         '''
         # If graph data exists
         if self.graph:
-            nodes = self.data['nodes']
 
-            for node in nodes:
-                extra_node = node['id'] + '_1'
-                self.graph.add_node(extra_node, X = node['X'], Y = node['Y'])
+            for node, edges in self.graph.adj.iteritems():
+                edge_count = len(edges)
+                node_info = self.graph.node[node]
+                if edge_count > 1:
+                    for index in range(1, edge_count + 1):
+                        extra_node = str(node) + '_' + str(index)
+                        self.graph.add_node(extra_node, X = node_info['X'], Y = node_info['Y'])
 
-                other_nodes = self.getOtherNodes(extra_node)
-                for to_node in other_nodes:
-                    weight = utility.getDistance(self.graph, extra_node, to_node)
-                    self.graph.add_edge(extra_node, to_node, weight = weight, IDLE_EDGES = True)
 
     def getOtherNodes(self, node):
         '''
