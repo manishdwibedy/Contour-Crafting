@@ -13,11 +13,11 @@ class AddingNodes(object):
         # If graph data exists
         if self.graph:
 
-            for node, edges in self.graph.adj.iteritems():
+            for node, edges in self.graph.edge.iteritems():
                 edge_count = len(edges)
                 node_info = self.graph.node[node]
                 if edge_count > 1:
-                    for index in range(1, edge_count + 1):
+                    for index in range(1, edge_count):
                         extra_node = str(node) + '_' + str(index)
                         self.graph.add_node(extra_node, X = node_info['X'], Y = node_info['Y'])
 
