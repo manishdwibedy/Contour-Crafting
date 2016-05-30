@@ -1,4 +1,4 @@
-import input, basic_graph
+import input, basic_graph, add_nodes
 
 if __name__ == '__main__':
     input = input.Input()
@@ -6,6 +6,9 @@ if __name__ == '__main__':
 
     graph = basic_graph.BasicGraph(input.data)
     graph.createBasicGraph()
-    graph.addIdleEdges()
+
+    extra_nodes = add_nodes.AddingNodes(graph)
+    extra_nodes.addNodes()
+    # graph.addIdleEdges()
     graph.addNodes()
     pass
