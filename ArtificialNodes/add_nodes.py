@@ -34,17 +34,3 @@ class AddingNodes(object):
                 node_x = node['X']
                 node_y = node['Y']
                 self.graph.add_node(node_id, X = node_x, Y = node_y)
-
-
-    def getOtherNodes(self, node):
-        '''
-        Get all nodes other than the current node
-        :param node: the current node's ID
-        :return: a list of nodes other than the current node
-        '''
-        node_list = []
-        for node_object in self.graph.node:
-            if node != node_object:
-                node_list.append(node_object)
-
-        return node_list
