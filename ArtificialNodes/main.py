@@ -1,10 +1,10 @@
 import input, basic_graph, add_nodes
 
 if __name__ == '__main__':
-    input = input.Input()
-    input.readFile('input.json')
+    graphInput = input.Input()
+    graphInput.readFile('input.json')
 
-    graph = basic_graph.BasicGraph(input.data)
+    graph = basic_graph.BasicGraph(graphInput.data)
     graph.createBasicGraph()
 
     extra_nodes = add_nodes.AddingNodes(graph)
