@@ -9,6 +9,4 @@ if __name__ == '__main__':
 
     extra_nodes = add_nodes.AddingNodes(graph)
     extra_nodes.addNodes()
-    # graph.addIdleEdges()
-    graph.addNodes()
     pass
