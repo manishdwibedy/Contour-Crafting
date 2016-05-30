@@ -10,6 +10,9 @@ class AddingNodes(object):
         Addition of extra nodes
         :return:
         '''
+
+        extra_node_list = []
+
         # If graph data exists
         if self.graph:
 
@@ -19,7 +22,13 @@ class AddingNodes(object):
                 if edge_count > 1:
                     for index in range(1, edge_count):
                         extra_node = str(node) + '_' + str(index)
-                        self.graph.add_node(extra_node, X = node_info['X'], Y = node_info['Y'])
+                        node_object = {
+                                'id': extra_node,
+                                'X' : node_info['X'],
+                                'Y' : node_info['Y']
+                            }
+                        extra_node_list.append(node_object)
+            pass
 
 
     def getOtherNodes(self, node):
