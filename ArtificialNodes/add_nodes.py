@@ -28,7 +28,12 @@ class AddingNodes(object):
                                 'Y' : node_info['Y']
                             }
                         extra_node_list.append(node_object)
-            pass
+
+            for node in extra_node_list:
+                node_id = node['id']
+                node_x = node['X']
+                node_y = node['Y']
+                self.graph.add_node(node_id, X = node_x, Y = node_y)
 
 
     def getOtherNodes(self, node):
