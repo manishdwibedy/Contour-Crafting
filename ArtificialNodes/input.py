@@ -1,7 +1,5 @@
 import networkx as nx
-from  constant import DEPOSITION_EDGE, ROTATION_COST
-from collections import Counter
-from math import pow
+from  constant import DEPOSITION_EDGE
 import os
 import json
 
