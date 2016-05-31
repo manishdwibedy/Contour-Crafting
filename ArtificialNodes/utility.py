@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def getDistance(graph, start_node, end_node):
     if start_node in graph.node and end_node in graph.node:
@@ -11,7 +12,7 @@ def getDistance(graph, start_node, end_node):
     else:
         return -1
 
-def findAngle(graph, edge_pair):
+def findAngle(graph, edge_pair, degrees=False):
     '''
     Finding the angle between the edge pair in the graph
     :param graph:  the graph information
@@ -33,7 +34,11 @@ def findAngle(graph, edge_pair):
         # Appending the vector
         vectors.append((vector['X'], vector['Y']))
 
-    return angle_between(vectors)
+    angle_rad = angle_between(vectors)
+
+    if degrees:
+        return math.degrees(angle_rad)
+    return angle_rad
 
 def unit_vector(vector):
     """ Returns the unit vector of the vector.  """
