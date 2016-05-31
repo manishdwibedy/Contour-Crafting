@@ -1,3 +1,4 @@
+import itertools, utility
 
 class AddingNodes(object):
     def __init__(self, input):
@@ -20,10 +21,18 @@ class AddingNodes(object):
                 if edge_count > 1:
                     for index in range(1, edge_count):
                         extra_node = str(node) + '_' + str(index)
+
+                        edge_pair = []
+                        for node_pair in itertools.product(node, edges):
+                            edge_pair.append(node_pair)
+
+                        rotation_angle = utility.findAngle(self.graph, edge_pair)
+
                         node_object = {
                                 'id': extra_node,
                                 'X' : node_info['X'],
-                                'Y' : node_info['Y']
+                                'Y' : node_info['Y'],
+                                'angle': rotation_angle
                             }
                         extra_node_list.append(node_object)
         return extra_node_list
