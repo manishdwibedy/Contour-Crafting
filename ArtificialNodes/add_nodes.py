@@ -4,12 +4,11 @@ class AddingNodes(object):
         self.data = input.data
         self.graph = input.graph
 
-    def addNodes(self):
+    def findNodes(self):
         '''
-        Addition of extra nodes
-        :return:
+        Finding the nodes to be added.
+        :return: the list of nodes that needs to be added in the graph
         '''
-
         extra_node_list = []
 
         # If graph data exists
@@ -27,9 +26,16 @@ class AddingNodes(object):
                                 'Y' : node_info['Y']
                             }
                         extra_node_list.append(node_object)
+        return extra_node_list
 
-            for node in extra_node_list:
-                node_id = node['id']
-                node_x = node['X']
-                node_y = node['Y']
-                self.graph.add_node(node_id, X = node_x, Y = node_y)
+    def addNodes(self):
+        '''
+        Addition of extra nodes
+        :return:
+        '''
+
+        for node in self.findNodes():
+            node_id = node['id']
+            node_x = node['X']
+            node_y = node['Y']
+            self.graph.add_node(node_id, X = node_x, Y = node_y)
