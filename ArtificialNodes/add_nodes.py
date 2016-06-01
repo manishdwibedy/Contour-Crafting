@@ -48,7 +48,7 @@ class AddingNodes(object):
             node_x = node['X']
             node_y = node['Y']
             self.graph.add_node(node_id, X = node_x, Y = node_y)
-            self.addRotationCost(node_id)
+            self.addRotationCost(node)
 
     def addRotationCost(self, artificial_node):
         '''
@@ -56,7 +56,8 @@ class AddingNodes(object):
         :param artificial_node: the added node
         :return:
         '''
-        index = artificial_node.index('_')
-        original_node = artificial_node[:index]
-        self.graph.add_edge(original_node, artificial_node, ROTATION_COST = 1)
+        node_id = artificial_node['id']
+        index = node_id.index('_')
+        original_node = node_id[:index]
+        self.graph.add_edge(original_node, node_id, ROTATION_COST = 1)
         pass
