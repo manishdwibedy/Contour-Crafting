@@ -1,4 +1,5 @@
 import itertools, utility
+from constant import ROTATION_COST
 
 class AddingNodes(object):
     def __init__(self, input):
@@ -59,5 +60,6 @@ class AddingNodes(object):
         node_id = artificial_node['id']
         index = node_id.index('_')
         original_node = node_id[:index]
-        self.graph.add_edge(original_node, node_id, ROTATION_COST = 1)
+        rotation_cost = artificial_node['angle'] * ROTATION_COST
+        self.graph.add_edge(original_node, node_id, ROTATION_COST = rotation_cost)
         pass
