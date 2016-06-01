@@ -51,6 +51,10 @@ class AddingNodes(object):
             self.graph.add_node(node_id, X = node_x, Y = node_y)
             self.addRotationCost(node)
 
+        # Added all the artificial nodes
+        # Now, adding all the idle edges to make a complete graph.
+        self.addIdleEdges()
+
     def addRotationCost(self, artificial_node):
         '''
         Adding the rotation cost for the newly added node
@@ -62,4 +66,16 @@ class AddingNodes(object):
         original_node = node_id[:index]
         rotation_cost = artificial_node['angle'] * ROTATION_COST
         self.graph.add_edge(original_node, node_id, ROTATION_COST = rotation_cost)
-        pass
+
+    def addIdleEdges(self):
+        '''
+        Adding idle edges to make the graph fully complete
+        :return:
+        '''
+        nodes = self.graph.node
+
+        for start_node, start_info in nodes.iteritems():
+            for end_node, end_info in nodes.iteritems():
+                if start_node != end_node and not self.graph.has_edge(start_node, end_node):
+                    distance = utility.getDistance(self.graph, start_node, end_node)
+                    self.graph.add_edge(start_node, end_node, IDLE_COST = distance)
