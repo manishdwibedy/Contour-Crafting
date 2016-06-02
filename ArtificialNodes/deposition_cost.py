@@ -14,13 +14,13 @@ class DepositionCost(object):
         '''
         :return: Retuning the the maximum rotation cost.
         '''
-        pass
+        return 0
 
     def computeMaxIdleCost(self):
         '''
         :return: Retuning the the maximum idle edge cost.
         '''
-        pass
+        return 0
 
     def comptuteDepositionCost(self):
         '''
@@ -38,5 +38,18 @@ class DepositionCost(object):
         Assigning the deposition cost to the edges
         :return:
         '''
+        deposition_cost = self.comptuteDepositionCost()
+        # edges = self.graph.edges_iter(data='DEPOSITION_EDGE',default=1)
+        edges = self.graph.edges(data=True)
+
+        # Storing all the depostitions edges
+        deposition_edges = []
+
+        # Computation of the depostion edges
+        for edge in edges:
+            data = edge[2]
+            if "DEPOSITION_EDGE" in data:
+                deposition_edges.append(edge)
+
         pass
 
