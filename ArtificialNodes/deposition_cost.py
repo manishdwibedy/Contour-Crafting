@@ -33,6 +33,21 @@ class DepositionCost(object):
 
         return deposition_cost
 
+    def getEdgeByKey(self, key):
+        '''
+        Returning the list of edges based of the key presence
+        :param key: the key that would be searched in the edge's data
+        :return: a list of edges that contain the key
+        '''
+        edge_list = []
+
+        for edge in self.graph.edges(data=True):
+            data = edge[2]
+            if key in data:
+                edge_list.append(edge)
+
+        return edge_list
+
     def assignDepositionCost(self):
         '''
         Assigning the deposition cost to the edges
@@ -42,11 +57,14 @@ class DepositionCost(object):
         # edges = self.graph.edges_iter(data='DEPOSITION_EDGE',default=1)
         edges = self.graph.edges(data=True)
 
+        # Getting all the deposition edges
+        deposition_edges = self.getEdgeByKey('DEPOSITION_EDGE')
+
         # Assigning the deposition edges the required deposition cost
-        for edge in edges:
-            data = edge[2]
-            if "DEPOSITION_EDGE" in data:
-                data['DEPOSITION_COST'] = -10
+        for deposition_edge in deposition_edges:
+            data = deposition_edge[2]
+            data['DEPOSITION_COST'] = -10
+
 
         pass
 
