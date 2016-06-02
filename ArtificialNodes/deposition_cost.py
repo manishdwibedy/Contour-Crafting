@@ -46,7 +46,7 @@ class DepositionCost(object):
         idle_cost  = self.computeMaxIdleCost()
         rotation_cost = self.computeMaxRotationCost()
 
-        deposition_cost = 5 * (idle_cost + rotation_cost)
+        deposition_cost = -5 * (idle_cost + rotation_cost)
 
         return deposition_cost
 
@@ -80,8 +80,5 @@ class DepositionCost(object):
         # Assigning the deposition edges the required deposition cost
         for deposition_edge in deposition_edges:
             data = deposition_edge[2]
-            data['DEPOSITION_COST'] = -10
-
-
-        pass
+            data['DEPOSITION_COST'] = deposition_cost
 
