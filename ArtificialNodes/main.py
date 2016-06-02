@@ -1,4 +1,4 @@
-import input, basic_graph, add_nodes
+import input, basic_graph, add_nodes, deposition_cost
 
 if __name__ == '__main__':
     # Reading the graph from the input file
@@ -12,4 +12,7 @@ if __name__ == '__main__':
     # Adding the extra nodes in the graph depending upon the degree of the node.
     graph = add_nodes.AddingNodes(graph)
     graph.addNodes()
-    pass
+
+    # Assigning the deposition costs
+    graph = deposition_cost.DepositionCost(graph)
+    graph.assignDepositionCost()

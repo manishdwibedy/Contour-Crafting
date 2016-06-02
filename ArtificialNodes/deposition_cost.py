@@ -7,8 +7,8 @@ class DepositionCost(object):
     The deposition cost would be computed using the 5 times than maximum IDLE time in the graph.
     '''
 
-    def __init__(self):
-        pass
+    def __init__(self, graph):
+        self.graph = graph.graph
 
     def computeMaxRotationCost(self):
         '''
@@ -26,7 +26,12 @@ class DepositionCost(object):
         '''
         :return: Retuning the the deposition cost
         '''
-        pass
+        idle_cost  = self.computeMaxIdleCost()
+        rotation_cost = self.computeMaxRotationCost()
+
+        deposition_cost = 5 * (idle_cost + rotation_cost)
+
+        return deposition_cost
 
     def assignDepositionCost(self):
         '''
