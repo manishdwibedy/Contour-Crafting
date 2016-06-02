@@ -20,7 +20,16 @@ class DepositionCost(object):
         '''
         :return: Retuning the the maximum idle edge cost.
         '''
-        return 0
+        max_idle_cost = 0
+        idle_edges = self.getEdgeByKey('IDLE_COST')
+
+        for edge in idle_edges:
+            data = edge[2]
+            cost = data['IDLE_COST']
+            if cost > max_idle_cost:
+                max_idle_cost = cost
+        return max_idle_cost
+
 
     def comptuteDepositionCost(self):
         '''
