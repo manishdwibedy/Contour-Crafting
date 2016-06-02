@@ -1,5 +1,5 @@
 import networkx as nx
-from  constant import DEPOSITION_EDGE
+from  constant import DEPOSITION_COST
 import os
 import json
 
@@ -98,7 +98,7 @@ class Input(object):
 
         for edge in self.edges:
             if edge['start'][:1] != edge['end'][:1]:
-                graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_EDGE)
+                graph.add_edge(edge['start'], edge['end'], weight = DEPOSITION_COST)
             else:
                 graph.add_edge(edge['start'], edge['end'], weight = 0)
 

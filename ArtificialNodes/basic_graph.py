@@ -1,7 +1,7 @@
 import networkx as nx
 from collections import Counter
 import utility
-from constant import DEPOSITION_EDGE
+from constant import DEPOSITION_COST
 
 class BasicGraph(object):
     def __init__(self, data):
@@ -23,7 +23,7 @@ class BasicGraph(object):
                 self.graph.add_node(node['id'], X = node['X'], Y = node['Y'])
 
             for edge in edges:
-                self.graph.add_edge(edge['start'], edge['end'], DEPOSITION_COST = DEPOSITION_EDGE)
+                self.graph.add_edge(edge['start'], edge['end'], DEPOSITION_COST = DEPOSITION_COST)
 
     def getOtherNodes(self, node):
         '''
