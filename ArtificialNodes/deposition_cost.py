@@ -14,7 +14,15 @@ class DepositionCost(object):
         '''
         :return: Retuning the the maximum rotation cost.
         '''
-        return 0
+        max_rotation_cost = 0
+        idle_edges = self.getEdgeByKey('ROTATION_COST')
+
+        for edge in idle_edges:
+            data = edge[2]
+            cost = data['ROTATION_COST']
+            if cost > max_rotation_cost:
+                max_rotation_cost = cost
+        return max_rotation_cost
 
     def computeMaxIdleCost(self):
         '''
