@@ -42,14 +42,11 @@ class DepositionCost(object):
         # edges = self.graph.edges_iter(data='DEPOSITION_EDGE',default=1)
         edges = self.graph.edges(data=True)
 
-        # Storing all the depostitions edges
-        deposition_edges = []
-
-        # Computation of the depostion edges
+        # Assigning the deposition edges the required deposition cost
         for edge in edges:
             data = edge[2]
             if "DEPOSITION_EDGE" in data:
-                deposition_edges.append(edge)
+                data['DEPOSITION_COST'] = -10
 
         pass
 
