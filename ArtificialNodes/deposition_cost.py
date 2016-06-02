@@ -1,3 +1,4 @@
+from constant import DEPOSITION_RATIO
 
 class DepositionCost(object):
     '''
@@ -46,7 +47,7 @@ class DepositionCost(object):
         idle_cost  = self.computeMaxIdleCost()
         rotation_cost = self.computeMaxRotationCost()
 
-        deposition_cost = -5 * (idle_cost + rotation_cost)
+        deposition_cost = DEPOSITION_RATIO * (idle_cost + rotation_cost)
 
         return deposition_cost
 
