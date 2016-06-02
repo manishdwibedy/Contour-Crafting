@@ -10,6 +10,6 @@ if __name__ == '__main__':
     graph.createBasicGraph()
 
     # Adding the extra nodes in the graph depending upon the degree of the node.
-    extra_nodes = add_nodes.AddingNodes(graph)
-    extra_nodes.addNodes()
+    graph = add_nodes.AddingNodes(graph)
+    graph.addNodes()
     pass
