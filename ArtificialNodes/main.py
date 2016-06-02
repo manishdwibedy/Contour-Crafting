@@ -16,3 +16,4 @@ if __name__ == '__main__':
     # Assigning the deposition costs
     graph = deposition_cost.DepositionCost(graph)
     graph.assignDepositionCost()
+    pass
