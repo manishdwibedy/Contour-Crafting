@@ -78,8 +78,13 @@ class DepositionCost(object):
         # Getting all the deposition edges
         deposition_edges = self.getEdgeByKey('DEPOSITION_EDGE')
 
+        total_deposition_cost = 0
+
         # Assigning the deposition edges the required deposition cost
         for deposition_edge in deposition_edges:
             data = deposition_edge[2]
             data['DEPOSITION_COST'] = deposition_cost
+            total_deposition_cost += deposition_cost
+
+        self.total_deposition_cost = total_deposition_cost
 
