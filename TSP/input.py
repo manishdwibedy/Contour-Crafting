@@ -1,5 +1,4 @@
-import csv
-from constant import INPUT
+from util import get_edge_cost
 
 class Input(object):
     def __init__(self, graph):
@@ -9,12 +8,12 @@ class Input(object):
     def transform(self,):
         # {start : [{end, weight},{end, weight},....],... }
         matrix = {}
-        for input in self.input:
-            (start, end, weight) = input
-            if start in matrix:
-                matrix[start][end] = weight
-            else:
-                matrix[start] = {end : weight}
+        for start_node, edges in self.graph.edge.iteritems():
+            for end_node, edge_data in edges.iteritems():
+                if start_node not in matrix:
+                    matrix[start_node] = {end_node : get_edge_cost(edge_data)}
+                else:
+                    matrix[start_node][end_node] = get_edge_cost(edge_data)
 
         self.size = len(matrix) + 1
 
