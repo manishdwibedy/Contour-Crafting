@@ -5,6 +5,3 @@ class INPUT_TYPE(Enum):
     CSV = '.csv'
 
 INPUT = INPUT_TYPE.JSON
-
-print INPUT_TYPE.JSON.name
-print INPUT_TYPE.JSON.value
