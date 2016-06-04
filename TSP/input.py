@@ -14,10 +14,11 @@ class Input(object):
             start_node = self.node_alias[start_node]
             for end_node, edge_data in edges.iteritems():
                 end_node = self.node_alias[end_node]
+                cost = get_edge_cost(edge_data)
                 if start_node not in matrix:
-                    matrix[start_node] = {end_node : get_edge_cost(edge_data)}
+                    matrix[start_node] = {end_node : cost}
                 else:
-                    matrix[start_node][end_node] = get_edge_cost(edge_data)
+                    matrix[start_node][end_node] = cost
 
         self.size = len(matrix)
 
