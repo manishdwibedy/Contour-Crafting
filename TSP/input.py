@@ -1,4 +1,5 @@
 import csv
+from constant import INPUT
 
 class Input(object):
     def __init__(self):
@@ -6,7 +7,7 @@ class Input(object):
 
     def getInput(self, filename, headerRow = False):
 
-        with open('data/'+filename + '.csv', 'rb') as f:
+        with open('data/'+filename + INPUT.value, 'rb') as f:
             reader = csv.reader(f)
             if headerRow:
                 self.input = list(reader)[1:]
