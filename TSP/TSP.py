@@ -56,7 +56,9 @@ class TSP(object):
         for node in solution['nodes']:
             node_route.append(node_mapping[node])
 
-        return node_route
+        solution['nodes'] = node_route
+        return solution
+
     def solve(self):
         solution = {}
         # Solve, returns a solution if any.
