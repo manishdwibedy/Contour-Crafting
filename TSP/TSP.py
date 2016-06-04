@@ -1,5 +1,7 @@
 from ortools.constraint_solver import pywrapcp
 from input import Input
+from util import get_edge_type_cost
+from constant import EDGE_TPYE
 
 class TSP(object):
     def __init__(self, graph):
@@ -75,8 +77,27 @@ class TSP(object):
             node_route.append(node_mapping[node])
 
         solution['nodes'] = node_route
+        solution['cost'] = self.compute_tsp_cost(node_route)
         return solution
 
+    def compute_tsp_cost(self, route):
+        '''
+        Computing the cost of the solution. Currently focusing on the idle cost.
+        :param route: the final TSP route
+        :return: the idle cost
+        '''
+        idle_cost = 0
+
+        for node_index in range(1, len(route)):
+            start_node = route[node_index - 1]
+            end_node = route[node_index]
+            edge_data = self.graph.edge[start_node][end_node]
+
+            cost = get_edge_type_cost(edge_data)
+
+            if cost['type'] != EDGE_TPYE.DEPOSITION:
+                idle_cost += cost['cost']
+        return idle_cost
 
     def solve(self):
         '''
