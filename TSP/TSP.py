@@ -2,9 +2,10 @@ from ortools.constraint_solver import pywrapcp
 from input import Input
 
 class TSP(object):
-    def __init__(self):
+    def __init__(self, graph):
         self.tsp_use_random_matrix = True
         self.use_light_propagation = False
+        self.graph = graph.graph
 
     def setup(self, size):
         param = pywrapcp.RoutingParameters()
@@ -27,8 +28,7 @@ class TSP(object):
         self.parameters.no_tsp = False
 
     def run(self):
-        matrix = Input()
-        matrix.getInput('input', headerRow=True)
+        matrix = Input(self.graph)
         matrix.transform()
 
         self.setup(matrix.getSize())
