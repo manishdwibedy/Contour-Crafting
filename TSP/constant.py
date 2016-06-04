@@ -1,3 +1,3 @@
 from enum import Enum     # for enum34, or the stdlib version
 
-INPUT = Enum('JSON', 'CSV')
+INPUT = Enum(JSON='.json', CSV='.csv')
