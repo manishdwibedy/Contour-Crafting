@@ -19,7 +19,7 @@ class Input(object):
                 else:
                     matrix[start_node][end_node] = get_edge_cost(edge_data)
 
-        self.size = len(matrix) + 1
+        self.size = len(matrix)
 
         self.matrix = matrix
 
