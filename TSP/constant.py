@@ -5,3 +5,8 @@ class INPUT_TYPE(Enum):
     CSV = '.csv'
 
 INPUT = INPUT_TYPE.CSV
+
+class EDGE_TPYE(Enum):
+    DEPOSITION = 0
+    ROTATION = 1
+    IDLE = 2
