@@ -1,5 +1,10 @@
-from enum import Enum     # for enum34, or the stdlib version
+from enum import Enum
 
-INPUT_TYPES = Enum(JSON='.json', CSV='.csv')
+class INPUT_TYPE(Enum):
+    JSON = '.json'
+    CSV = '.csv'
 
-INPUT = INPUT_TYPES.JSON
+INPUT = INPUT_TYPE.JSON
+
+print INPUT_TYPE.JSON.name
+print INPUT_TYPE.JSON.value
