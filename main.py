@@ -1,10 +1,8 @@
-from ArtificialNodes import artificial_nodes
-from TSP.TSP import TSP
+from contour_crafting import ContourCrafting
 
 if __name__ == '__main__':
-    nodes = artificial_nodes.ArtiticialNodes()
-    graph = nodes.main()
+    contour_crafting = ContourCrafting()
+    contour_crafting.run()
 
-    TSP = TSP(graph)
-    solution = TSP.run()
+    solution = contour_crafting.get_solution()
     pass
