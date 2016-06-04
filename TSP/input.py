@@ -2,32 +2,10 @@ import csv
 from constant import INPUT
 
 class Input(object):
-    def __init__(self):
+    def __init__(self, graph):
         self.size = -1
+        self.graph = graph
 
-    def getInput(self, filename, headerRow = False):
-
-        with open('data/'+filename + INPUT.value, 'rb') as f:
-            reader = csv.reader(f)
-            if headerRow:
-                self.input = list(reader)[1:]
-            else:
-                self.input = list(reader)
-            self.cleanInput()
-
-    def cleanInput(self):
-        list = []
-        try:
-            for line in self.input:
-                (start, end, weight) = line
-                i_start = int(start)
-                i_end = int(end)
-                f_weight = float(weight)
-                list.append((i_start, i_end, f_weight))
-
-            self.input = list
-        except:
-            print 'Error in the data'
     def transform(self,):
         # {start : [{end, weight},{end, weight},....],... }
         matrix = {}
