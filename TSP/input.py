@@ -17,24 +17,6 @@ class Input(object):
 
         self.size = len(matrix) + 1
 
-        for row in range(self.size):
-            if row in matrix:
-                row_value = matrix[row]
-                for column in range(self.size):
-                    if row == column:
-                        row_value[column] = 0
-                    if column not in row_value:
-                        row_value[column] = matrix[column][row]
-                        # matrix[column][row] = matrix[row][column]
-            else:
-                row_value = {}
-                for column in range(self.size):
-                    if row == column:
-                        row_value[column] = 0
-                    if column not in row_value:
-                        row_value[column] = matrix[column][row]
-                        # matrix[column][row] = matrix[row][column]
-                matrix[row] = row_value
         self.matrix = matrix
 
     def Distance(self, from_node, to_node):
