@@ -6,6 +6,7 @@ class TSP(object):
         self.tsp_use_random_matrix = True
         self.use_light_propagation = False
         self.graph = graph.graph
+        self.total_deposition_cost = graph.total_deposition_cost
 
     def setup(self, size):
         param = pywrapcp.RoutingParameters()
