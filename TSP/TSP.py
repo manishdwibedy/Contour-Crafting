@@ -38,14 +38,25 @@ class TSP(object):
         # arguments (the from and to node inidices) and returns the distance between
         # these nodes.
 
+        node_alias = matrix.node_alias
+
         matrix_callback = matrix.Distance
         if self.tsp_use_random_matrix:
             self.routing.SetArcCostEvaluatorOfAllVehicles(matrix_callback)
         else:
             self.routing.SetArcCostEvaluatorOfAllVehicles(self.Distance)
 
-        return self.solve()
+        return self.getSolution(node_alias, self.solve())
 
+    def getSolution(self, node_alias, solution):
+
+        node_mapping = {v: k for k, v in node_alias.items()}
+        node_route = []
+
+        for node in solution['nodes']:
+            node_route.append(node_mapping[node])
+
+        return node_route
     def solve(self):
         solution = {}
         # Solve, returns a solution if any.
