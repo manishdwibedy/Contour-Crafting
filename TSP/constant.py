@@ -4,4 +4,4 @@ class INPUT_TYPE(Enum):
     JSON = '.json'
     CSV = '.csv'
 
-INPUT = INPUT_TYPE.JSON
+INPUT = INPUT_TYPE.CSV
