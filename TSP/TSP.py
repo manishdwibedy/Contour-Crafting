@@ -3,12 +3,20 @@ from input import Input
 
 class TSP(object):
     def __init__(self, graph):
+        '''
+        Initializing the TSP object
+        :param graph: the input graph with artificial nodes already added
+        '''
         self.tsp_use_random_matrix = True
         self.use_light_propagation = False
         self.graph = graph.graph
         self.total_deposition_cost = graph.total_deposition_cost
 
     def setup(self, size):
+        '''
+        Configuration of the TSP module
+        :param size: the size of the matrix
+        '''
         param = pywrapcp.RoutingParameters()
         param.use_light_propagation = self.use_light_propagation
         pywrapcp.RoutingModel.SetGlobalParameters(param)
@@ -29,6 +37,10 @@ class TSP(object):
         self.parameters.no_tsp = False
 
     def run(self):
+        '''
+        The actual execution method solving the TSP problem
+        :return: the solution of the TSP problem
+        '''
         matrix = Input(self.graph)
         matrix.transform()
 
@@ -50,7 +62,12 @@ class TSP(object):
         return self.getSolution(node_alias, self.solve())
 
     def getSolution(self, node_alias, solution):
-
+        '''
+        Getting the final solution in terms of node labels.
+        :param node_alias: the map having node and their aliases
+        :param solution: the final solution with node indexes
+        :return: the final solution dictionary
+        '''
         node_mapping = {v: k for k, v in node_alias.items()}
         node_route = []
 
@@ -60,7 +77,12 @@ class TSP(object):
         solution['nodes'] = node_route
         return solution
 
+
     def solve(self):
+        '''
+        Solving the TSP problem
+        :return: the solution object
+        '''
         solution = {}
         # Solve, returns a solution if any.
         assignment = self.routing.SolveWithParameters(self.parameters, None)
