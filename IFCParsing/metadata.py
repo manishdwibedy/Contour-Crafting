@@ -70,6 +70,19 @@ class MetaData(object):
                     metadata_info['view_defination'] = view_defination
                 pass
         elif line.startswith('FILE_NAME'):
+            found_filename_regex = re.search(r'FILE_NAME(.*);', line)
+            file_name_defination = ('file_name', 'creation_time', 'creating_user', 'creating user org', 'pre-processor', 'app_name', 'authorizing_user')
+            if found_filename_regex:
+                file_name_string = found_filename_regex.group(1)
+                file_name_string_escaped = ast.literal_eval(file_name_string)
+
+                file_name_info = {}
+                if len(file_name_string_escaped) == len(file_name_defination):
+                    for index in range(len(file_name_string_escaped)):
+                        label = file_name_defination[index]
+                        value = file_name_string_escaped[index]
+                        file_name_info[label] = value
+                    metadata_info['file_name'] = file_name_info
             pass
         elif line.startswith('FILE_SCHEMA'):
             pass
