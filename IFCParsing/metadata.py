@@ -44,10 +44,15 @@ class MetaData(object):
         # Detecting whether a comment line is in progress
         if line.startswith('/*'):
             self.commentInProgress = True
+            print 'Comment Started!'
         if not self.commentInProgress:
-            print 'normal line'
+            print 'header : ' + line
         else:
             print 'comment - ' + line
+            if line.endswith('*/'):
+                self.commentInProgress = False
+                print 'Comment Ended!'
+
 
     def get_metadata(self):
         '''
