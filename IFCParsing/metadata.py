@@ -56,9 +56,19 @@ class MetaData(object):
 
     def extract_header_info(self, line, metadata_info):
         if line.startswith('FILE_DESCRIPTION'):
-            found_description = re.search(r'FILE_DESCRIPTION(((.)*));', line)
-            if found_description:
-                description = found_description.group(1)
+            found_description_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
+            if found_description_regex:
+                import ast
+                description = found_description_regex.group(1)
+                description_escaped = ast.literal_eval(description)
+
+                view_defination_string = description_escaped[0]
+
+                view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', view_defination_string)
+
+                if view_defination_regex:
+                    view_defination = view_defination_regex.group(1)
+                    metadata_info['view_defination'] = view_defination
                 pass
         elif line.startswith('FILE_NAME'):
             pass
