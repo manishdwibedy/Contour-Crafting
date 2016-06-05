@@ -11,7 +11,7 @@ class ContourCrafting(object):
         :return:
         '''
         ifc_parsing = IFCParsing('Project1.ifc')
-        ifc_parsing.parse()
+        graph_data = ifc_parsing.parse()
 
         nodes = artificial_nodes.ArtiticialNodes()
         graph = nodes.main()

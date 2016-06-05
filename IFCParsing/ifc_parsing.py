@@ -10,6 +10,9 @@ class IFCParsing(object):
         ifc_derected = detector.detect()
         if ifc_derected:
             self.read()
+            return self.content
+        else:
+            return None
 
     def read_first_line(self):
         file_input = input.Input(self.filename)
