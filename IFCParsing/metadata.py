@@ -1,4 +1,4 @@
-import re
+import re, ast
 
 class MetaData(object):
     def __init__(self, lines):
@@ -58,7 +58,6 @@ class MetaData(object):
         if line.startswith('FILE_DESCRIPTION'):
             found_description_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
             if found_description_regex:
-                import ast
                 description = found_description_regex.group(1)
                 description_escaped = ast.literal_eval(description)
 
