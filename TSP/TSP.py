@@ -87,6 +87,7 @@ class TSP(object):
         :return: the idle cost
         '''
         idle_cost = 0
+        rotation_cost = 0
 
         for node_index in range(1, len(route)):
             start_node = route[node_index - 1]
@@ -96,8 +97,14 @@ class TSP(object):
             cost = get_edge_type_cost(edge_data)
 
             if cost['type'] != EDGE_TPYE.DEPOSITION:
-                idle_cost += cost['cost']
-        return idle_cost
+                if cost['type'] == EDGE_TPYE.ROTATION:
+                    rotation_cost += cost['cost']
+                else:
+                    idle_cost += cost['cost']
+        return {
+            'idle': idle_cost,
+            'rotation': rotation_cost
+        }
 
     def solve(self):
         '''
