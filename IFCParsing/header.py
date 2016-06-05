@@ -33,10 +33,10 @@ class Header(object):
         return header_lines
 
     def extract_header(self):
-        header_info = self.extract_header_section()
+        header_lines = self.extract_header_section()
 
         header_info = {}
-        for header_line in header_info:
+        for header_line in header_lines:
             self.extra_header_info_line(header_line, header_info)
 
         return header_info
