@@ -15,10 +15,12 @@ class MetaData(object):
             # Header section started
             if line.strip() == 'HEADER;':
                 header_started = True
+                continue
 
             # If the header section has started, but not yet ended
             if header_started and line.strip() != 'ENDSEC;':
-                header_lines.append(line)
+                if len(line) > 0:
+                    header_lines.append(line)
             # If the header section has not yet started
             elif not header_started:
                 continue
