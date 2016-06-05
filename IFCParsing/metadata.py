@@ -56,9 +56,9 @@ class MetaData(object):
 
     def extract_header_info(self, line, metadata_info):
         if line.startswith('FILE_DESCRIPTION'):
-            match = re.search(r'FILE_DESCRIPTION(((.)*));', line)
-            if match:
-                description = match.group(1)
+            found_description = re.search(r'FILE_DESCRIPTION(((.)*));', line)
+            if found_description:
+                description = found_description.group(1)
                 pass
         elif line.startswith('FILE_NAME'):
             pass
