@@ -56,12 +56,12 @@ class MetaData(object):
 
     def extract_header_info(self, line, metadata_info):
         if line.startswith('FILE_DESCRIPTION'):
-            found_filename_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
-            if found_filename_regex:
-                file_name_string = found_filename_regex.group(1)
-                file_name_string_escaped = ast.literal_eval(file_name_string)
+            found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
+            if found_file_schema_regex:
+                file_schema_string = found_file_schema_regex.group(1)
+                file_schema_string_escaped = ast.literal_eval(file_schema_string)
 
-                filename_string = file_name_string_escaped[0]
+                filename_string = file_schema_string_escaped[0]
 
                 view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', filename_string)
 
@@ -70,21 +70,27 @@ class MetaData(object):
                     metadata_info['view_defination'] = view_defination
                 pass
         elif line.startswith('FILE_NAME'):
-            found_filename_regex = re.search(r'FILE_NAME(.*);', line)
+            found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
             file_name_defination = ('file_name', 'creation_time', 'creating_user', 'creating user org', 'pre-processor', 'app_name', 'authorizing_user')
-            if found_filename_regex:
-                file_name_string = found_filename_regex.group(1)
-                file_name_string_escaped = ast.literal_eval(file_name_string)
+            if found_file_schema_regex:
+                file_schema_string = found_file_schema_regex.group(1)
+                file_schema_string_escaped = ast.literal_eval(file_schema_string)
 
                 file_name_info = {}
-                if len(file_name_string_escaped) == len(file_name_defination):
-                    for index in range(len(file_name_string_escaped)):
+                if len(file_schema_string_escaped) == len(file_name_defination):
+                    for index in range(len(file_schema_string_escaped)):
                         label = file_name_defination[index]
-                        value = file_name_string_escaped[index]
+                        value = file_schema_string_escaped[index]
                         file_name_info[label] = value
                     metadata_info['file_name'] = file_name_info
             pass
         elif line.startswith('FILE_SCHEMA'):
+            found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
+            if found_file_schema_regex:
+                file_schema_string = found_file_schema_regex.group(1)
+                file_schema_string_escaped = ast.literal_eval(file_schema_string)
+                metadata_info['file_schema'] = file_schema_string_escaped
+
             pass
 
         pass
