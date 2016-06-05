@@ -2,6 +2,7 @@
 class MetaData(object):
     def __init__(self, lines):
         self.lines = lines
+        self.commentInProgress = False
 
     def extract_metadata_section(self):
         '''
@@ -28,16 +29,33 @@ class MetaData(object):
             else:
                 break
 
-        self.header_lines = header_lines
+        return header_lines
 
+    def extract_metadata(self):
+        header_info = self.extract_metadata_section()
+
+        metadata_info = {}
+        for header_line in header_info:
+            self.extra_header_info_line(header_line, metadata_info)
+
+        return metadata_info
+
+    def extra_header_info_line(self, line, metadata_info):
+        # Detecting whether a comment line is in progress
+        if line.startswith('/*'):
+            self.commentInProgress = True
+        if not self.commentInProgress:
+            print 'normal line'
+        else:
+            print 'comment - ' + line
 
     def get_metadata(self):
         '''
         Returning the metadata content
         :return: metadata object
         '''
-        self.extract_metadata_section()
-        if self.header_lines:
-            return self.header_lines
+        metadata = self.extract_metadata()
+        if len(metadata) > 0:
+            return metadata
         else:
             return None
