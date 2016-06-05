@@ -17,7 +17,9 @@ class IFCParsing(object):
             self.read()
             header = Header(self.lines)
             self.header = header.get_header()
-            return self.lines
+            return {
+                'header': self.header
+            }
         else:
             return None
 
