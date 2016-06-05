@@ -1,11 +1,11 @@
 import re, ast
 
-class MetaData(object):
+class Header(object):
     def __init__(self, lines):
         self.lines = lines
         self.commentInProgress = False
 
-    def extract_metadata_section(self):
+    def extract_header_section(self):
         '''
         Extracting the header section of the IFC file
         :return: a list of header lines
@@ -32,29 +32,29 @@ class MetaData(object):
 
         return header_lines
 
-    def extract_metadata(self):
-        header_info = self.extract_metadata_section()
+    def extract_header(self):
+        header_info = self.extract_header_section()
 
-        metadata_info = {}
+        header_info = {}
         for header_line in header_info:
-            self.extra_header_info_line(header_line, metadata_info)
+            self.extra_header_info_line(header_line, header_info)
 
-        return metadata_info
+        return header_info
 
-    def extra_header_info_line(self, line, metadata_info):
+    def extra_header_info_line(self, line, header_info):
         # Detecting whether a comment line is in progress
         if line.startswith('/*'):
             self.commentInProgress = True
             print 'Comment Started!'
         if not self.commentInProgress:
-            self.extract_header_info(line, metadata_info)
+            self.extract_header_info(line, header_info)
         else:
             print 'comment - ' + line
             if line.endswith('*/'):
                 self.commentInProgress = False
                 print 'Comment Ended!'
 
-    def extract_header_info(self, line, metadata_info):
+    def extract_header_info(self, line, header_info):
         if line.startswith('FILE_DESCRIPTION'):
             found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
             if found_file_schema_regex:
@@ -67,7 +67,7 @@ class MetaData(object):
 
                 if view_defination_regex:
                     view_defination = view_defination_regex.group(1)
-                    metadata_info['view_defination'] = view_defination
+                    header_info['view_defination'] = view_defination
                 pass
         elif line.startswith('FILE_NAME'):
             found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
@@ -82,25 +82,26 @@ class MetaData(object):
                         label = file_name_defination[index]
                         value = file_schema_string_escaped[index]
                         file_name_info[label] = value
-                    metadata_info['file_name'] = file_name_info
+                    header_info['file_name'] = file_name_info
             pass
         elif line.startswith('FILE_SCHEMA'):
             found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
             if found_file_schema_regex:
                 file_schema_string = found_file_schema_regex.group(1)
                 file_schema_string_escaped = ast.literal_eval(file_schema_string)
-                metadata_info['file_schema'] = file_schema_string_escaped
+                header_info['file_schema'] = file_schema_string_escaped
 
             pass
 
         pass
-    def get_metadata(self):
+
+    def get_header(self):
         '''
-        Returning the metadata content
-        :return: metadata object
+        Returning the header content
+        :return: header object
         '''
-        metadata = self.extract_metadata()
-        if len(metadata) > 0:
-            return metadata
+        header = self.extract_header()
+        if len(header) > 0:
+            return header
         else:
             return None

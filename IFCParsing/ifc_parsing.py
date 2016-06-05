@@ -1,6 +1,6 @@
 from input import Input
 from detection import IFC_Detector
-from metadata import MetaData
+from header import Header
 
 class IFCParsing(object):
     def __init__(self, filename):
@@ -15,8 +15,8 @@ class IFCParsing(object):
         ifc_derected = detector.detect()
         if ifc_derected:
             self.read()
-            metadata = MetaData(self.lines)
-            self.metadata = metadata.get_metadata()
+            header = Header(self.lines)
+            self.header = header.get_header()
             return self.lines
         else:
             return None
