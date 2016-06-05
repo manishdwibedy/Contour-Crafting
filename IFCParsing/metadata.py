@@ -1,3 +1,4 @@
+import re
 
 class MetaData(object):
     def __init__(self, lines):
@@ -46,14 +47,25 @@ class MetaData(object):
             self.commentInProgress = True
             print 'Comment Started!'
         if not self.commentInProgress:
-            print 'header : ' + line
+            self.extract_header_info(line, metadata_info)
         else:
             print 'comment - ' + line
             if line.endswith('*/'):
                 self.commentInProgress = False
                 print 'Comment Ended!'
 
+    def extract_header_info(self, line, metadata_info):
+        if line.startswith('FILE_DESCRIPTION'):
+            match = re.search(r'FILE_DESCRIPTION(((.)*));', line)
+            if match:
+                description = match.group(1)
+                pass
+        elif line.startswith('FILE_NAME'):
+            pass
+        elif line.startswith('FILE_SCHEMA'):
+            pass
 
+        pass
     def get_metadata(self):
         '''
         Returning the metadata content
