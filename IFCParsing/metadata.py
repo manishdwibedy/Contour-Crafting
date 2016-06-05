@@ -31,9 +31,11 @@ class MetaData(object):
         self.header_lines = header_lines
 
 
-
-
     def get_metadata(self):
+        '''
+        Returning the metadata content
+        :return: metadata object
+        '''
         self.extract_metadata_section()
         if self.header_lines:
             return self.header_lines
