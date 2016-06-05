@@ -56,14 +56,14 @@ class MetaData(object):
 
     def extract_header_info(self, line, metadata_info):
         if line.startswith('FILE_DESCRIPTION'):
-            found_description_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
-            if found_description_regex:
-                description = found_description_regex.group(1)
-                description_escaped = ast.literal_eval(description)
+            found_filename_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
+            if found_filename_regex:
+                file_name_string = found_filename_regex.group(1)
+                file_name_string_escaped = ast.literal_eval(file_name_string)
 
-                view_defination_string = description_escaped[0]
+                filename_string = file_name_string_escaped[0]
 
-                view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', view_defination_string)
+                view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', filename_string)
 
                 if view_defination_regex:
                     view_defination = view_defination_regex.group(1)
