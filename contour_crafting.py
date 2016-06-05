@@ -1,6 +1,6 @@
 from ArtificialNodes import artificial_nodes
 from TSP.TSP import TSP
-
+from IFCParsing.ifc_parsing import IFCParsing
 class ContourCrafting(object):
     def __init__(self):
         pass
@@ -10,6 +10,9 @@ class ContourCrafting(object):
         Solving the Contour Crafting problem
         :return:
         '''
+        ifc_parsing = IFCParsing('Project1.ifc')
+        ifc_parsing.parse()
+
         nodes = artificial_nodes.ArtiticialNodes()
         graph = nodes.main()
 
