@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from ArtificialNodes.constant import IDLE_RATIO
+from common.constant import IDLE_RATIO, EDGE_TPYE
 
 def getDistance(graph, start_node, end_node):
     if start_node in graph.node and end_node in graph.node:
@@ -55,3 +55,30 @@ def angle_between(vector_pair):
     v2_u = unit_vector(vector_pair[1])
     return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
 
+def get_edge_cost(edge_data):
+    if 'ROTATION_COST' in edge_data:
+        return edge_data['ROTATION_COST']
+    elif 'IDLE_COST' in edge_data:
+        return edge_data['IDLE_COST']
+    else:
+        return edge_data['DEPOSITION_COST']
+
+def get_edge_type_cost(edge_data):
+    type = ''
+    cost = 0
+
+    if 'DEPOSITION_COST' in edge_data:
+        type = EDGE_TPYE.DEPOSITION
+        cost = edge_data['DEPOSITION_COST']
+    else:
+        if 'ROTATION_COST' in edge_data:
+            type = EDGE_TPYE.ROTATION
+            cost = edge_data['ROTATION_COST']
+        elif 'IDLE_COST' in edge_data:
+            type = EDGE_TPYE.IDLE
+            cost =  edge_data['IDLE_COST']
+
+    return {
+        'type': type,
+        'cost': cost
+    }

@@ -1,7 +1,7 @@
 import itertools
 
 from common import utility
-from constant import ROTATION_COST
+from common.constant import ROTATION_COST
 
 
 class AddingNodes(object):

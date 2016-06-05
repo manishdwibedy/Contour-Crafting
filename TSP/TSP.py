@@ -1,9 +1,9 @@
 from ortools.constraint_solver import pywrapcp
 
+from common.constant import EDGE_TPYE
 from common.utility import getDistance
-from constant import EDGE_TPYE
+from common.utility import get_edge_type_cost
 from input import Input
-from util import get_edge_type_cost
 
 
 class TSP(object):

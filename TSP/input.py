@@ -1,4 +1,4 @@
-from util import get_edge_cost
+from common.utility import get_edge_cost
 
 class Input(object):
     def __init__(self, graph):

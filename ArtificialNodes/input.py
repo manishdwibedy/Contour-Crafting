@@ -1,5 +1,5 @@
 import networkx as nx
-from  constant import DEPOSITION_RATIO
+from  common.constant import DEPOSITION_RATIO
 import os
 import json
 
