@@ -1,8 +1,10 @@
 from ortools.constraint_solver import pywrapcp
+
+from common.utility import getDistance
+from constant import EDGE_TPYE
 from input import Input
 from util import get_edge_type_cost
-from constant import EDGE_TPYE
-from ArtificialNodes.utility import getDistance
+
 
 class TSP(object):
     def __init__(self, graph):

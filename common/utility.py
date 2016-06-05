@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from constant import IDLE_RATIO
+from ArtificialNodes.constant import IDLE_RATIO
 
 def getDistance(graph, start_node, end_node):
     if start_node in graph.node and end_node in graph.node:

@@ -1,6 +1,9 @@
-import networkx as nx
 from collections import Counter
-import utility
+
+import networkx as nx
+
+from common import utility
+
 
 class BasicGraph(object):
     def __init__(self, data):

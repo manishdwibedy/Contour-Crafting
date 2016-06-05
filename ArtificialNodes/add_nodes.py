@@ -1,5 +1,8 @@
-import itertools, utility
+import itertools
+
+from common import utility
 from constant import ROTATION_COST
+
 
 class AddingNodes(object):
     def __init__(self, input):
