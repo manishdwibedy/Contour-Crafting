@@ -2,6 +2,7 @@ from ortools.constraint_solver import pywrapcp
 from input import Input
 from util import get_edge_type_cost
 from constant import EDGE_TPYE
+from ArtificialNodes.utility import getDistance
 
 class TSP(object):
     def __init__(self, graph):
@@ -88,6 +89,7 @@ class TSP(object):
         '''
         idle_cost = 0
         rotation_cost = 0
+        deposition_cost = 0
 
         for node_index in range(1, len(route)):
             start_node = route[node_index - 1]
@@ -101,9 +103,13 @@ class TSP(object):
                     rotation_cost += cost['cost']
                 else:
                     idle_cost += cost['cost']
+            else:
+                cost = getDistance(self.graph, start_node, end_node)
+                deposition_cost += cost
         return {
             'idle': idle_cost,
-            'rotation': rotation_cost
+            'rotation': rotation_cost,
+            'deposition': deposition_cost
         }
 
     def solve(self):
