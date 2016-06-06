@@ -41,7 +41,7 @@ class Data(object):
                             ifc_project_info.append(ast.literal_eval(val))
                         except:
                             ifc_project_info.append(val)
-
+                    self.extract_info_tag(data_info, ifc_project_info)
             # If the data section has not yet started
             elif not data_started:
                 continue
@@ -49,6 +49,28 @@ class Data(object):
 
         return data_lines
 
+    def extract_info_tag(self, data_info, ifc_project_info):
+        info_list = {}
+        label_list = ('GUID', 'IfcOwnerHistory', 'Project Name', 'Project Description', None, None, None, 'IfcUnitAssignment', 'IfcGeometricRepresentationContext')
+
+        # Every parameter has a corresponding label
+        if len(label_list) == len(ifc_project_info):
+            for index in range(len(ifc_project_info)):
+                parameter = ifc_project_info[index]
+                label = label_list[index]
+
+                # If the label is missing, skip the parameter altogether
+                if label:
+                    # If the parameter is actually a reference
+                    if parameter.startswith('#'):
+                        pass
+                    # If the parameter is actually some concrete value
+                    else:
+                        if parameter == '$':
+                            info_list[label] = None
+                        else:
+                            info_list[label] = parameter
+        pass
     def extract_data(self):
         data_lines = self.extract_data_section()
 
