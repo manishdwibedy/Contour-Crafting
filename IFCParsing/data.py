@@ -61,7 +61,7 @@ class Data(object):
                 if label:
                     # If the parameter is actually a reference
                     if parameter.startswith('#'):
-                        pass
+                        self.extract_tag_info(parameter)
                     # If the parameter is actually some concrete value
                     else:
                         if parameter == '$':
@@ -70,6 +70,33 @@ class Data(object):
                             data_section_info[label] = parameter
         pass
 
+    def extract_tag_info(self, parameter):
+        '''
+        Extracting the tag content recursively
+        :param parameter: the tag value to look for. For eg. #23
+        :return: the tag value
+        '''
+        value = None
+
+        # If the parameter has been seen earlier
+        if parameter in self.data_tag_info:
+            # The content of the paramter
+            tag_content = self.data_tag_info[parameter]
+
+            # The regex to extract the name and the content of the tag
+            tag_regex = re.search(r'(.*)\((.*)\);', tag_content)
+
+            # If the regex search was successful
+            if tag_regex:
+                tag_name = tag_regex.group(1)
+                tag_content_value = tag_regex.group(2)
+
+
+                pass
+
+            pass
+        else:
+            return value
     def extract_data(self):
         data_lines = self.extract_data_section()
 
