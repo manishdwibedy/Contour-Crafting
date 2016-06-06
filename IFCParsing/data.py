@@ -21,15 +21,31 @@ class Data(object):
                 continue
 
             # If the data section has started, but not got the tag 'IFCPROJECT' we looking for
-            if data_started and not 'IFCPROJECT' in line.strip():
-                if len(line) > 0:
-                    data_lines.append(line)
+            if data_started and len(line) > 0:
+                line_info = line.split('=')
+                label = line_info[0].strip()
+                info = line_info[1].strip()
+                data_info[label] = info
+                # If the main tag is encountered
+                if 'IFCPROJECT' in line.strip():
+                    found_ifc_project_regex = re.search(r'IFCPROJECT\((.*)\);', info)
+                    ifc_project = found_ifc_project_regex.group(1)
+
+                    ifc_project = ifc_project.replace('(', '')
+                    ifc_project = ifc_project.replace(')', '')
+
+                    ifc_project_info = []
+                    values = ifc_project.split(',')
+                    for val in values:
+                        try:
+                            ifc_project_info.append(ast.literal_eval(val))
+                        except:
+                            ifc_project_info.append(val)
+
             # If the data section has not yet started
             elif not data_started:
                 continue
-            # If the data section has ended
-            else:
-                break
+
 
         return data_lines
 
