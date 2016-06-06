@@ -24,6 +24,8 @@ class Data(object):
             # If the data section has started, but not got the tag 'IFCPROJECT' we looking for
             if data_started and len(line) > 0:
                 line_info = line.split('=')
+                if len(line_info) == 1:
+                    continue
                 label = line_info[0].strip()
                 info = line_info[1].strip()
                 self.data_tag_info[label] = info
@@ -42,7 +44,9 @@ class Data(object):
                             ifc_project_info.append(ast.literal_eval(val))
                         except:
                             ifc_project_info.append(val)
-                    self.extract_info_tag(ifc_project_info, data_section_info)
+                    value = self.extract_info_tag(ifc_project_info, data_section_info)
+                    data_section_info
+
             # If the data section has not yet started
             elif not data_started:
                 continue
@@ -61,14 +65,14 @@ class Data(object):
                 if label:
                     # If the parameter is actually a reference
                     if parameter.startswith('#'):
-                        self.extract_tag_info(parameter)
+                        name, value = self.extract_tag_info(parameter)
+                        pass
                     # If the parameter is actually some concrete value
                     else:
                         if parameter == '$':
                             data_section_info[label] = None
                         else:
                             data_section_info[label] = parameter
-        pass
 
     def extract_tag_info(self, parameter):
         '''
@@ -76,7 +80,8 @@ class Data(object):
         :param parameter: the tag value to look for. For eg. #23
         :return: the tag value
         '''
-        value = None
+        value = {}
+        name = ''
 
         # If the parameter has been seen earlier
         if parameter in self.data_tag_info:
@@ -88,15 +93,24 @@ class Data(object):
 
             # If the regex search was successful
             if tag_regex:
-                tag_name = tag_regex.group(1)
+                # Tag's name
+                name = tag_regex.group(1)
+                # Tag's content
                 tag_content_value = tag_regex.group(2)
 
+                # If the tag content contain some reference to a parameter
+                if '#' in tag_content_value:
+                    sub_parameters = re.findall(r'#[0-9]+', tag_content_value)
+                    for sub_parameter in sub_parameters:
+                        tag_name, tag_value = self.extract_tag_info(sub_parameter)
+                        value[tag_name] = tag_value
+                    return name, value
+                # if the value is actually some concreate object
+                else:
+                    return name, tag_content_value
 
-                pass
-
-            pass
         else:
-            return value
+            return None, value
     def extract_data(self):
         data_lines = self.extract_data_section()
 
