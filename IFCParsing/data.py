@@ -4,14 +4,15 @@ class Data(object):
     def __init__(self, lines):
         self.lines = lines
         self.commentInProgress = False
+        self.label_list = ('GUID', 'IfcOwnerHistory', 'Project Name', 'Project Description', None, None, None, 'IfcUnitAssignment', 'IfcGeometricRepresentationContext')
+        self.data_tag_info = {}
 
     def extract_data_section(self):
         '''
         Extracting the header section of the IFC file
         :return: a list of header lines
         '''
-
-        data_info = {}
+        data_section_info = {}
         data_lines = []
         data_started = False
         for line in self.lines:
@@ -25,7 +26,7 @@ class Data(object):
                 line_info = line.split('=')
                 label = line_info[0].strip()
                 info = line_info[1].strip()
-                data_info[label] = info
+                self.data_tag_info[label] = info
                 # If the main tag is encountered
                 if 'IFCPROJECT' in line.strip():
                     found_ifc_project_regex = re.search(r'IFCPROJECT\((.*)\);', info)
@@ -41,7 +42,7 @@ class Data(object):
                             ifc_project_info.append(ast.literal_eval(val))
                         except:
                             ifc_project_info.append(val)
-                    self.extract_info_tag(data_info, ifc_project_info)
+                    self.extract_info_tag(ifc_project_info, data_section_info)
             # If the data section has not yet started
             elif not data_started:
                 continue
@@ -49,15 +50,12 @@ class Data(object):
 
         return data_lines
 
-    def extract_info_tag(self, data_info, ifc_project_info):
-        info_list = {}
-        label_list = ('GUID', 'IfcOwnerHistory', 'Project Name', 'Project Description', None, None, None, 'IfcUnitAssignment', 'IfcGeometricRepresentationContext')
-
+    def extract_info_tag(self, ifc_project_info, data_section_info):
         # Every parameter has a corresponding label
-        if len(label_list) == len(ifc_project_info):
+        if len(self.label_list) == len(ifc_project_info):
             for index in range(len(ifc_project_info)):
                 parameter = ifc_project_info[index]
-                label = label_list[index]
+                label = self.label_list[index]
 
                 # If the label is missing, skip the parameter altogether
                 if label:
@@ -67,10 +65,11 @@ class Data(object):
                     # If the parameter is actually some concrete value
                     else:
                         if parameter == '$':
-                            info_list[label] = None
+                            data_section_info[label] = None
                         else:
-                            info_list[label] = parameter
+                            data_section_info[label] = parameter
         pass
+
     def extract_data(self):
         data_lines = self.extract_data_section()
 
