@@ -44,7 +44,7 @@ class Data(object):
                             ifc_project_info.append(ast.literal_eval(val))
                         except:
                             ifc_project_info.append(val)
-                    value = self.extract_info_tag(ifc_project_info, data_section_info)
+                    self.extract_info_tag(ifc_project_info, data_section_info)
                     data_section_info
 
             # If the data section has not yet started
@@ -66,14 +66,14 @@ class Data(object):
                     # If the parameter is actually a reference
                     if parameter.startswith('#'):
                         name, value = self.extract_tag_info(parameter)
-                        pass
+                        data_section_info[name] = value
                     # If the parameter is actually some concrete value
                     else:
                         if parameter == '$':
                             data_section_info[label] = None
                         else:
                             data_section_info[label] = parameter
-
+        return data_section_info
     def extract_tag_info(self, parameter):
         '''
         Extracting the tag content recursively
