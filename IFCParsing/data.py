@@ -107,10 +107,28 @@ class Data(object):
                     return name, value
                 # if the value is actually some concreate object
                 else:
-                    return name, tag_content_value
+                    return name, self.extract_concrete_tag(tag_content_value)
 
         else:
             return None, value
+
+    def extract_concrete_tag(self, tag_content_value):
+        parameters = tag_content_value.split(',')
+
+        tag_value = []
+        for parameter in parameters:
+            if not parameter == '$':
+                try:
+                    parameter = ast.literal_eval(parameter)
+                    if len(parameter) > 0:
+                        tag_value.append(parameter)
+                except:
+                    print 'Error!!'
+
+        if len(tag_value) > 0:
+            return ';'.join(tag_value)
+        return tag_value
+
     def extract_data(self):
         data_lines = self.extract_data_section()
 
