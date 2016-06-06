@@ -11,16 +11,17 @@ class Data(object):
         :return: a list of header lines
         '''
 
+        data_info = {}
         data_lines = []
         data_started = False
         for line in self.lines:
             # Header section started
-            if line.strip() == 'HEADER;':
+            if line.strip() == 'DATA;':
                 data_started = True
                 continue
 
-            # If the data section has started, but not yet ended
-            if data_started and line.strip() != 'ENDSEC;':
+            # If the data section has started, but not got the tag 'IFCPROJECT' we looking for
+            if data_started and not 'IFCPROJECT' in line.strip():
                 if len(line) > 0:
                     data_lines.append(line)
             # If the data section has not yet started
