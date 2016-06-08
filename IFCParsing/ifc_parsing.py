@@ -2,6 +2,7 @@ from input import Input
 from detection import IFC_Detector
 from header import Header
 from data import Data
+from project import Project
 
 class IFCParsing(object):
     def __init__(self, filename):
@@ -21,6 +22,9 @@ class IFCParsing(object):
 
             data = Data(self.lines)
             self.data = data.get_data()
+
+            project = Project(self.lines)
+            self.project = project.get_project()
 
             return {
                 'header': self.header
