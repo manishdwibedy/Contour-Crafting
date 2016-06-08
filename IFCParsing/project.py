@@ -10,17 +10,17 @@ class Project(object):
         Extracting the header section of the IFC file
         :return: a list of header lines
         '''
-        data_section_info = {}
-        data_lines = []
-        data_started = False
+        project_section_info = {}
+        project_lines = []
+        project_started = False
         for line in self.lines:
             # Header section started
             if line.strip() == 'DATA;':
-                data_started = True
+                project_started = True
                 continue
 
-            # If the data section has started, but not got the tag 'IFCPROJECT' we looking for
-            if data_started and len(line) > 0:
+            # If the project section has started, but not got the tag 'IFCPROJECT' we looking for
+            if project_started and len(line) > 0:
                 line_info = line.split('=')
                 if len(line_info) == 1:
                     continue
@@ -42,17 +42,17 @@ class Project(object):
                             ifc_project_info.append(ast.literal_eval(val))
                         except:
                             ifc_project_info.append(val)
-                    self.extract_info_tag(ifc_project_info, data_section_info)
-                    data_section_info
+                    self.extract_info_tag(ifc_project_info, project_section_info)
+                    project_section_info
 
-            # If the data section has not yet started
-            elif not data_started:
+            # If the project section has not yet started
+            elif not project_started:
                 continue
 
 
-        return data_lines
+        return project_lines
 
-    def extract_info_tag(self, ifc_project_info, data_section_info):
+    def extract_info_tag(self, ifc_project_info, project_section_info):
         # Every parameter has a corresponding label
         if len(self.label_list) == len(ifc_project_info):
             for index in range(len(ifc_project_info)):
@@ -64,14 +64,14 @@ class Project(object):
                     # If the parameter is actually a reference
                     if parameter.startswith('#'):
                         name, value = self.extract_tag_info(parameter)
-                        data_section_info[name] = value
+                        project_section_info[name] = value
                     # If the parameter is actually some concrete value
                     else:
                         if parameter == '$':
-                            data_section_info[label] = None
+                            project_section_info[label] = None
                         else:
-                            data_section_info[label] = parameter
-        return data_section_info
+                            project_section_info[label] = parameter
+        return project_section_info
     def extract_tag_info(self, parameter):
         '''
         Extracting the tag content recursively
@@ -136,20 +136,20 @@ class Project(object):
 
         return project_info
 
-    def extract_project_info_line(self, line, data_info):
+    def extract_project_info_line(self, line, project_info):
         # Detecting whether a comment line is in progress
         if line.startswith('/*'):
             self.commentInProgress = True
             print 'Comment Started!'
         if not self.commentInProgress:
-            self.extract_project_info(line, data_info)
+            self.extract_project_info(line, project_info)
         else:
             print 'comment - ' + line
             if line.endswith('*/'):
                 self.commentInProgress = False
                 print 'Comment Ended!'
 
-    def extract_project_info(self, line, data_info):
+    def extract_project_info(self, line, project_info):
         if line.startswith('FILE_DESCRIPTION'):
             found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
             if found_file_schema_regex:
@@ -162,7 +162,7 @@ class Project(object):
 
                 if view_defination_regex:
                     view_defination = view_defination_regex.group(1)
-                    data_info['view_defination'] = view_defination
+                    project_info['view_defination'] = view_defination
                 pass
         elif line.startswith('FILE_NAME'):
             found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
@@ -177,14 +177,14 @@ class Project(object):
                         label = file_name_defination[index]
                         value = file_schema_string_escaped[index]
                         file_name_info[label] = value
-                    data_info['file_name'] = file_name_info
+                    project_info['file_name'] = file_name_info
             pass
         elif line.startswith('FILE_SCHEMA'):
             found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
             if found_file_schema_regex:
                 file_schema_string = found_file_schema_regex.group(1)
                 file_schema_string_escaped = ast.literal_eval(file_schema_string)
-                data_info['file_schema'] = file_schema_string_escaped
+                project_info['file_schema'] = file_schema_string_escaped
 
             pass
 
@@ -192,11 +192,11 @@ class Project(object):
 
     def get_project(self):
         '''
-        Returning the data content
-        :return: data object
+        Returning the project content
+        :return: project object
         '''
-        data = self.extract_project()
-        if len(data) > 0:
-            return data
+        project = self.extract_project()
+        if len(project) > 0:
+            return project
         else:
             return None
