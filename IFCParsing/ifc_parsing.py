@@ -27,7 +27,9 @@ class IFCParsing(object):
             self.project = project.get_project()
 
             return {
-                'header': self.header
+                'header': self.header,
+                'data': self.data,
+                'project': self.project
             }
         else:
             return None
