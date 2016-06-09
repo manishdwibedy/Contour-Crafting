@@ -1,4 +1,5 @@
 import re, ast
+from common.utility import merge_two_dicts
 
 class Data(object):
     def __init__(self, lines):
@@ -31,21 +32,7 @@ class Data(object):
                 self.data_tag_info[label] = info
                 # If the main tag is encountered
                 if 'IFCPROJECT' in line.strip():
-                    found_ifc_project_regex = re.search(r'IFCPROJECT\((.*)\);', info)
-                    ifc_project = found_ifc_project_regex.group(1)
-
-                    ifc_project = ifc_project.replace('(', '')
-                    ifc_project = ifc_project.replace(')', '')
-
-                    ifc_project_info = []
-                    values = ifc_project.split(',')
-                    for val in values:
-                        try:
-                            ifc_project_info.append(ast.literal_eval(val))
-                        except:
-                            ifc_project_info.append(val)
-                    self.extract_info_tag(ifc_project_info, data_section_info)
-                    data_section_info
+                    data_lines.append(info)
 
             # If the data section has not yet started
             elif not data_started:
@@ -134,7 +121,8 @@ class Data(object):
 
         data_info = {}
         for data_line in data_lines:
-            self.extra_data_info_line(data_line, data_info)
+            info = self.extra_data_info_line(data_line, data_info)
+            data_info = merge_two_dicts(data_info, info)
 
         return data_info
 
@@ -144,7 +132,8 @@ class Data(object):
             self.commentInProgress = True
             print 'Comment Started!'
         if not self.commentInProgress:
-            self.extract_data_info(line, data_info)
+            data_info = self.extract_data_info(line, data_info)
+            return data_info
         else:
             print 'comment - ' + line
             if line.endswith('*/'):
@@ -152,45 +141,66 @@ class Data(object):
                 print 'Comment Ended!'
 
     def extract_data_info(self, line, data_info):
-        if line.startswith('FILE_DESCRIPTION'):
-            found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        data_section_info = {}
+        found_ifc_project_regex = re.search(r'IFCPROJECT\((.*)\);', line)
+        ifc_project = found_ifc_project_regex.group(1)
 
-                filename_string = file_schema_string_escaped[0]
+        ifc_project = ifc_project.replace('(', '')
+        ifc_project = ifc_project.replace(')', '')
 
-                view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', filename_string)
+        ifc_project_info = []
+        values = ifc_project.split(',')
+        for val in values:
+            try:
+                ifc_project_info.append(ast.literal_eval(val))
+            except:
+                ifc_project_info.append(val)
+        self.extract_info_tag(ifc_project_info, data_section_info)
 
-                if view_defination_regex:
-                    view_defination = view_defination_regex.group(1)
-                    data_info['view_defination'] = view_defination
-                pass
-        elif line.startswith('FILE_NAME'):
-            found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
-            file_name_defination = ('file_name', 'creation_time', 'creating_user', 'creating user org', 'pre-processor', 'app_name', 'authorizing_user')
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        data_info = merge_two_dicts(data_section_info, data_info)
 
-                file_name_info = {}
-                if len(file_schema_string_escaped) == len(file_name_defination):
-                    for index in range(len(file_schema_string_escaped)):
-                        label = file_name_defination[index]
-                        value = file_schema_string_escaped[index]
-                        file_name_info[label] = value
-                    data_info['file_name'] = file_name_info
-            pass
-        elif line.startswith('FILE_SCHEMA'):
-            found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
-                data_info['file_schema'] = file_schema_string_escaped
 
-            pass
+        return data_info
 
-        pass
+
+        # if line.startswith('FILE_DESCRIPTION'):
+        #     found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
+        #     if found_file_schema_regex:
+        #         file_schema_string = found_file_schema_regex.group(1)
+        #         file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        #
+        #         filename_string = file_schema_string_escaped[0]
+        #
+        #         view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', filename_string)
+        #
+        #         if view_defination_regex:
+        #             view_defination = view_defination_regex.group(1)
+        #             data_info['view_defination'] = view_defination
+        #         pass
+        # elif line.startswith('FILE_NAME'):
+        #     found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
+        #     file_name_defination = ('file_name', 'creation_time', 'creating_user', 'creating user org', 'pre-processor', 'app_name', 'authorizing_user')
+        #     if found_file_schema_regex:
+        #         file_schema_string = found_file_schema_regex.group(1)
+        #         file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        #
+        #         file_name_info = {}
+        #         if len(file_schema_string_escaped) == len(file_name_defination):
+        #             for index in range(len(file_schema_string_escaped)):
+        #                 label = file_name_defination[index]
+        #                 value = file_schema_string_escaped[index]
+        #                 file_name_info[label] = value
+        #             data_info['file_name'] = file_name_info
+        #     pass
+        # elif line.startswith('FILE_SCHEMA'):
+        #     found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
+        #     if found_file_schema_regex:
+        #         file_schema_string = found_file_schema_regex.group(1)
+        #         file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        #         data_info['file_schema'] = file_schema_string_escaped
+        #
+        #     pass
+
 
     def get_data(self):
         '''
