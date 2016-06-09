@@ -4,6 +4,7 @@ class Project(object):
     def __init__(self, lines):
         self.lines = lines
         self.project_tag_info = {}
+        self.label_list = ['IFCSITE']
 
     def extract_project_section(self):
         '''
