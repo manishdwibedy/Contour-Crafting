@@ -1,10 +1,14 @@
 import re, ast
+from common.utility import split_parameters
 
 class Project(object):
     def __init__(self, lines):
         self.lines = lines
         self.project_tag_info = {}
-        self.label_list = ['IFCSITE']
+        self.commentInProgress = False
+        self.label_list = ['GlobalId','OwnerHistory','Name','Description','RefLatitude','RefLongitude','RefElevation','LandTitleNumber','SiteAddress']
+
+
 
     def extract_project_section(self):
         '''
@@ -30,21 +34,7 @@ class Project(object):
                 self.project_tag_info[label] = info
                 # If the main tag is encountered
                 if 'IFCSITE' in line.strip():
-                    found_ifc_project_regex = re.search(r'IFCSITE\((.*)\);', info)
-                    ifc_project = found_ifc_project_regex.group(1)
-
-                    ifc_project = ifc_project.replace('(', '')
-                    ifc_project = ifc_project.replace(')', '')
-
-                    ifc_project_info = []
-                    values = ifc_project.split(',')
-                    for val in values:
-                        try:
-                            ifc_project_info.append(ast.literal_eval(val))
-                        except:
-                            ifc_project_info.append(val)
-                    self.extract_info_tag(ifc_project_info, project_section_info)
-                    project_section_info
+                    project_lines.append(info)
 
             # If the project section has not yet started
             elif not project_started:
@@ -151,43 +141,25 @@ class Project(object):
                 print 'Comment Ended!'
 
     def extract_project_info(self, line, project_info):
-        if line.startswith('FILE_DESCRIPTION'):
-            found_file_schema_regex = re.search(r'FILE_DESCRIPTION(.*);', line)
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
+        project_section_info = {}
+        found_ifc_project_regex = re.search(r'IFCSITE\((.*)\);', line)
+        ifc_project = found_ifc_project_regex.group(1)
 
-                filename_string = file_schema_string_escaped[0]
+        # ifc_project = ifc_project.replace('(', '')
+        # ifc_project = ifc_project.replace(')', '')
 
-                view_defination_regex = re.search(r'ViewDefinition \[(.*)\]', filename_string)
-
-                if view_defination_regex:
-                    view_defination = view_defination_regex.group(1)
-                    project_info['view_defination'] = view_defination
-                pass
-        elif line.startswith('FILE_NAME'):
-            found_file_schema_regex = re.search(r'FILE_NAME(.*);', line)
-            file_name_defination = ('file_name', 'creation_time', 'creating_user', 'creating user org', 'pre-processor', 'app_name', 'authorizing_user')
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
-
-                file_name_info = {}
-                if len(file_schema_string_escaped) == len(file_name_defination):
-                    for index in range(len(file_schema_string_escaped)):
-                        label = file_name_defination[index]
-                        value = file_schema_string_escaped[index]
-                        file_name_info[label] = value
-                    project_info['file_name'] = file_name_info
-            pass
-        elif line.startswith('FILE_SCHEMA'):
-            found_file_schema_regex = re.search(r'FILE_SCHEMA(.*);', line)
-            if found_file_schema_regex:
-                file_schema_string = found_file_schema_regex.group(1)
-                file_schema_string_escaped = ast.literal_eval(file_schema_string)
-                project_info['file_schema'] = file_schema_string_escaped
-
-            pass
+# '#\$.()
+# '\\'2AR5DOWMH3evn1gxNP$CO2\\',#41,\\'Default\\',$,\\'\\',#219,$,$,.ELEMENT.,(42,21,31,181945),(-71,-3,-24,-263305),0.,$,$'
+        ifc_project_info = []
+        values = split_parameters(ifc_project)
+        # values = ifc_project.split(',')
+        for val in values:
+            try:
+                ifc_project_info.append(ast.literal_eval(val))
+            except:
+                ifc_project_info.append(val)
+        self.extract_info_tag(ifc_project_info, project_section_info)
+        project_section_info
 
         pass
 

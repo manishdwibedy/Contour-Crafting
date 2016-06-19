@@ -88,3 +88,19 @@ def merge_two_dicts(x, y):
     z = x.copy()
     z.update(y)
     return z
+
+def split_parameters(line):
+
+    parameter_list = []
+    last_character = line[0]
+    valid_seperator_characters = "#\$.(),"
+    current_parameter = ''
+    for character in line:
+
+        # Encountered a seperator
+        if character in valid_seperator_characters or last_character in valid_seperator_characters:
+            print 'seperator'
+        elif character == "'":
+            continue
+        else:
+            current_parameter += character
