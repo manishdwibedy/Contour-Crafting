@@ -10,8 +10,8 @@ class ContourCrafting(object):
         Solving the Contour Crafting problem
         :return:
         '''
-        ifc_parsing = IFCParsing('Project1.ifc')
-        graph_data = ifc_parsing.parse()
+        # ifc_parsing = IFCParsing('Project1.ifc')
+        # graph_data = ifc_parsing.parse()
 
         nodes = artificial_nodes.ArtiticialNodes()
         graph = nodes.main()
