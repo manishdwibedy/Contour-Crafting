@@ -5,7 +5,11 @@ class GCode(object):
         self.solution = solution
 
     def run(self):
-        print 'Starting with GCode'
+        print 'Starting with GCode\n'
 
+        graph = self.graph.graph
         for node in self.solution['nodes']:
-            print node
+            print "Current Node - " + node
+            position = graph.node[node]
+            print "Position - (" + str(position['X']) + "," + str(position['Y']) + ')'
+            print ''
