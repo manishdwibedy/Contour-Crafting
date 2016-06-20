@@ -21,7 +21,7 @@ class ContourCrafting(object):
         TSP_object = TSP(graph)
         self.solution = TSP_object.run()
 
-        gcode = GCode()
+        gcode = GCode(graph, self.solution)
         gcode.run()
 
         pass
