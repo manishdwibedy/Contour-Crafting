@@ -17,4 +17,4 @@ DEPOSITION_RATIO = -10
 ROTATION_COST = 0.1
 IDLE_RATIO = 1
 
-FILE_NAME = 'input.json'
+FILE_NAME = 'input_34_graph.json'
