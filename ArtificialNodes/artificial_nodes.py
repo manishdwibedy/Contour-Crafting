@@ -7,7 +7,7 @@ class ArtiticialNodes(object):
     def readFile(self):
         # Reading the graph from the input file
         self.graphInput = input.Input()
-        self.graphInput.readFile('input.json')
+        self.graphInput.readFile('input_34_graph.json')
 
     def makeGraph(self):
         # Construction the graph from the input

@@ -104,3 +104,9 @@ def split_parameters(line):
             continue
         else:
             current_parameter += character
+
+def getPossiblePair(node, node_list):
+    pairs = []
+    for node_object in node_list:
+        pairs.append((node, node_object))
+    return pairs

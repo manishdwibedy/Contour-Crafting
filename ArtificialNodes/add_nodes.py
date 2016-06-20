@@ -26,9 +26,7 @@ class AddingNodes(object):
                     for index in range(1, edge_count):
                         extra_node = str(node) + '_' + str(index)
 
-                        edge_pair = []
-                        for node_pair in itertools.product(node, edges):
-                            edge_pair.append(node_pair)
+                        edge_pair = utility.getPossiblePair(node, edges)
 
                         rotation_angle = utility.findAngle(self.graph, edge_pair, degrees=True)
 
