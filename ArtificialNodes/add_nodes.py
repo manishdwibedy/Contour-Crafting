@@ -66,7 +66,7 @@ class AddingNodes(object):
         index = node_id.index('_')
         original_node = node_id[:index]
         rotation_cost = artificial_node['angle'] * ROTATION_COST
-        self.graph.add_edge(original_node, node_id, ROTATION_COST = rotation_cost)
+        self.graph.add_edge(original_node, node_id, ROTATION_COST = 0)
 
     def addIdleEdges(self):
         '''
