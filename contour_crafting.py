@@ -1,6 +1,8 @@
 from ArtificialNodes import artificial_nodes
 from TSP.TSP import TSP
 from IFCParsing.ifc_parsing import IFCParsing
+from GCode.gcode import GCode
+
 class ContourCrafting(object):
     def __init__(self):
         pass
@@ -18,6 +20,9 @@ class ContourCrafting(object):
 
         TSP_object = TSP(graph)
         self.solution = TSP_object.run()
+
+        gcode = GCode()
+        gcode.run()
 
         pass
 
