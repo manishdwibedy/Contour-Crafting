@@ -1,4 +1,5 @@
 import input, basic_graph, add_nodes, deposition_cost
+from common.constant import FILE_NAME
 
 class ArtiticialNodes(object):
     def __init__(self):
@@ -7,7 +8,7 @@ class ArtiticialNodes(object):
     def readFile(self):
         # Reading the graph from the input file
         self.graphInput = input.Input()
-        self.graphInput.readFile('input_34_graph.json')
+        self.graphInput.readFile(FILE_NAME)
 
     def makeGraph(self):
         # Construction the graph from the input
