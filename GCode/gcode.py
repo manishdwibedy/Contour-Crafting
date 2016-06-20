@@ -6,3 +6,6 @@ class GCode(object):
 
     def run(self):
         print 'Starting with GCode'
+
+        for node in self.solution['nodes']:
+            print node
